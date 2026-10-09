@@ -181,3 +181,28 @@ Título: **Análise numérica do oscilador harmônico amortecido: comparação e
 O TCC usa exclusivamente a chave local `fisica-caderno-tcc-laboratorio-v1`, separada das anotações, flashcards e bibliografia do caderno principal. Dados editados são recuperados na mesma instalação do navegador. Antes de limpar exemplos, use **Salvar versão** e **Backup JSON**.
 
 **Como acessar:** abra o Caderno de Física, entre por e-mail, escolha **Meu TCC de Física**, depois use a navegação própria para editar capítulos, testar o oscilador amortecido, planejar entregas e gerar a versão para PDF. Os textos constituem **um exemplo didático de estudo teórico-computacional**; referências, normas institucionais, resultados e metadados devem ser conferidos pelo estudante antes de apresentar um trabalho acadêmico.
+
+
+## Expansão do Laboratório de TCC de Física — 09/10/2026
+
+Escopo **exclusivamente TCC**: a estrutura e os dados de Resumos, Flashcards e Referências Bibliográficas permanecem sem alterações. Backup criado na branch backup-tcc-antes-expansao-visual-20261009.
+
+### Mini prévia do documento
+
+A visão geral agora apresenta um cartão ilustrativo de capa, resumo e introdução, montado dinamicamente a partir do conteúdo preenchido pelo estudante. Tanto o cartão quanto o botão levam à tela de exportação #tcc/export. A miniatura não é um arquivo PDF incorporado: a produção do PDF é feita na impressão do navegador, escolhendo Salvar como PDF.
+
+### Funcionalidades científicas e de gestão
+
+O arquivo physics-tcc-more-features.js adiciona, sem reescrever os recursos anteriores, 32 ferramentas acadêmicas e 128 atividades preenchidas, formando 96 ferramentas em dez ambientes internos. Duas áreas novas: Oficina de investigação (hipóteses físicas, validação, protocolos, erro, reprodutibilidade) e Publicar e apresentar (artigo, pôster, seminário, divulgação, depósito e correções pós-banca).
+
+### Estações de cálculo dentro do TCC
+
+Em views-tcc-lab-plus.js, rotas #tcc/lab-plus, #tcc/lab-plus/uncertainty, #tcc/lab-plus/regression, #tcc/lab-plus/damping. Propagação da incerteza de R=V/I com covariância; regressão por mínimos quadrados ordinários (inclinação, intercepto, R² e dispersão residual); e determinação de regime de amortecimento com ζ, ω₀ e γ. Os exemplos são ilustrativos, não medições. As entradas são editáveis e persistem no estado isolado do TCC. Backup, limpeza e restauração de exemplo cobrem também estes campos.
+
+### Cores, texturas e compatibilidade
+
+O arquivo physics-tcc-vibrant.css introduz azul mais intenso e azul-claro, lilás, coral, amarelo e turquesa com gradientes, papel pontilhado, folhas sobrepostas e cartões ilustrados. Inclui regras responsivas e redução de movimento. Não afeta visualmente os outros módulos.
+
+### Testes
+
+Scripts, mini prévia, navegação, rota PDF, cálculos de Física, persistência, backup, limpeza e restauração verificados por simulação JavaScript. Recomenda-se inspecionar layout e impressão em celulares e navegadores reais antes de distribuição aos alunos.
