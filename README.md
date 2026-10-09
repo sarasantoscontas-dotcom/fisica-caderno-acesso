@@ -228,3 +228,14 @@ Os novos módulos não incluem destinos externos. O botão de consulta externa f
 
 ### Verificação
 Scripts carregados em simulação, 90 rotas internas de ferramenta renderizadas sem erro, formulários e edição, persistência isolada, backup e restauração, plano por prioridade, ordenação por data, limite diário, prévia do PDF e acionamento da impressão passaram. Inspeção visual de celulares, tablets e navegadores reais continua recomendada.
+
+
+## Ampliação — 45 novos laboratórios de Física (09/10/2026)
+
+Foram adicionados **45 módulos autônomos** divididos em nove áreas: Formação e Matemática, Laboratórios e Experimentos, Computação e Dados, Física Teórica, Fronteiras e Especializações, Licenciatura e Docência, Pesquisa e Publicação, Pós-Graduação, Estágio e Carreira. Os sete módulos anteriores permanecem disponíveis. A homepage agora apresenta uma biblioteca com filtros por categoria e busca; a barra superior continua compacta.
+
+Cada novo módulo possui dez oficinas com conteúdo específico, atividades iniciais, leitura contextualizada, edição, revisão, diário, portfólio, gerenciamento de atividades e dados locais independentes; os módulos quantitativos usam calculadoras científicas específicas com condições de validade. São 450 oficinas e 1.350 registros de atividade demonstrativos no acervo inicial, além de 15 modelos de calculadoras reaproveitados conforme a especialidade.
+
+A expansão foi inserida por arquivos isolados `physics-expansion-*.js` e `physics-expansion.css`, sem substituir o TCC nem os estúdios preexistentes. Os dados novos usam chaves `fisica-expansion-<id>-v1` de `localStorage`. As alterações feitas pelo aluno são locais; não existe sincronização entre dispositivos ou autenticação comercial segura. Backup JSON e restauração são específicos por módulo. A exportação de documentos para PDF utiliza a impressão do navegador.
+
+**Documentação completa:** [EXPANSAO-45-MODULOS.md](EXPANSAO-45-MODULOS.md) descreve as 45 áreas, suas dez oficinas, estruturas, persistência e limites de validação. Backup de referência: `backup-antes-45-modulos-20261009`. Foram feitos testes simulados de sintaxe, rotas, estado e calculadoras; inspeção visual manual e impressão em dispositivos reais são necessárias antes da distribuição.
