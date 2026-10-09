@@ -23,6 +23,10 @@ const rowAdd=(id,field)=>{const d=state(id);if(!d?.[field])return null;const r=f
 const rowRemove=(id,field,rid)=>{const d=state(id);if(!d?.[field])return false;d[field]=d[field].filter(r=>r.id!==rid);return save(id)};
 const topicSet=(testId,tid,key,value)=>{const t=state("provas")?.tests.find(x=>x.id===testId)?.topics?.find(x=>x.id===tid);if(!t||!["name","mastery","importance","tasks"].includes(key))return false;t[key]=["mastery","importance"].includes(key)?Math.max(key==="mastery"?0:1,Math.min(3,Number(value)||0)):String(value??"");return save("provas")};
 const topicAdd=tid=>{const t=state("provas")?.tests.find(x=>x.id===tid);if(!t)return false;t.topics.push({id:"topic-"+Date.now(),name:"Novo assunto de Física",mastery:1,importance:2,tasks:"Definir exercícios e dificuldade."});return save("provas")};
+const topicRemove=(testId,topicId)=>{const t=state("provas")?.tests.find(x=>x.id===testId);if(!t)return false;t.topics=t.topics.filter(x=>x.id!==topicId);return save("provas")};
+const projectStepSet=(stepId,key,value)=>{const s=state("pesquisa")?.project?.steps?.find(x=>x.id===stepId);if(!s||!["task","detail","stage"].includes(key))return false;s[key]=String(value??"").slice(0,9000);return save("pesquisa")};
+const projectStepAdd=()=>{const p=state("pesquisa")?.project;if(!p)return false;p.steps=p.steps||[];p.steps.push({id:"r-"+Date.now(),task:"Nova etapa de pesquisa",stage:"A fazer",detail:"Descreva a hipótese, a evidência e como fará a verificação."});return save("pesquisa")};
+const projectStepRemove=stepId=>{const p=state("pesquisa")?.project;if(!p)return false;p.steps=p.steps.filter(x=>x.id!==stepId);return save("pesquisa")};
 const reset=id=>{const o=obj(id);if(!o)return false;o.d=o.fresh();return save(id)};
 const clear=id=>{const o=obj(id);if(!o)return false;const d=o.d;d.settings={title:"",description:""};Object.values(d.features).forEach(f=>{f.notes="";f.entries=[]});if(id==="pesquisa")d.project={};if(id==="semestre"){d.courses=[];d.semester={}}if(id==="provas"){d.tests=[];d.preferences={}}return save(id)};
 const backup=id=>JSON.stringify({type:"fisica-studio-"+id,date:date(),data:state(id)},null,2);
@@ -43,5 +47,5 @@ function plan(clock=date()){
  const grouped={};for(const r of rows){const key=r.subject;if(!grouped[key])grouped[key]={name:key,weight:0,topics:[]};grouped[key].weight+=r.score;grouped[key].topics.push(r)}
  return {today:clock,tests,ranked:rows,schedule,subjectPriorities:Object.values(grouped).sort((a,b)=>b.weight-a.weight),preferences:prefs};
 }
-window.PHY_STUDIOS={config,state,all:()=>seed.configs,save,set,feature,featureSet,entrySet,entryAdd,entryRemove,rowSet,rowAdd,rowRemove,topicSet,topicAdd,reset,clear,backup,restore,priority,plan,date,plus,diff};
+window.PHY_STUDIOS={config,state,all:()=>seed.configs,save,set,feature,featureSet,entrySet,entryAdd,entryRemove,rowSet,rowAdd,rowRemove,topicSet,topicAdd,topicRemove,projectStepSet,projectStepAdd,projectStepRemove,reset,clear,backup,restore,priority,plan,date,plus,diff};
 })();
