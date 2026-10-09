@@ -3,7 +3,9 @@
 "use strict";
 const terms=[...(window.PHY_TERMS_A||[]),...(window.PHY_TERMS_B||[])].sort((a,b)=>a.number-b.number);
 const subjects=[...(window.PHY_SUBJECTS_A||[]),...(window.PHY_SUBJECTS_B||[])];
-const refs=window.PHY_BIBLIOGRAPHY||[];
+const refs=[...(window.PHY_BIBLIOGRAPHY||[]),...(window.PHY_EXTRA_BIB_FICHAS||[])];
+const extraSummaries=window.PHY_EXTRA_SUMMARIES||[];
+const extraCards=window.PHY_EXTRA_CARDS||[];
 const byId=new Map(subjects.map(s=>[s.id,s]));
 const DATA="fisica-caderno-estudante-v1",EMAIL="fisica-caderno-acesso-email-v1",ACTIVE="fisica-caderno-acesso-active-v1";
 const h=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -30,7 +32,11 @@ const modules=[
 const crumb=parts=>'<div class="breadcrumbs"><a href="#home">Meu caderno</a>'+parts.map(x=>' <span>›</span> '+(x.url?'<a href="'+h(x.url)+'">'+h(x.label)+'</a>':'<b>'+h(x.label)+'</b>')).join("")+'</div>';
 const hero=(label,title,desc,symbol)=>'<header class="module-hero"><span class="hero-pattern" aria-hidden="true"></span><span class="module-symbol" aria-hidden="true">'+symbol+'</span><span class="eyebrow">'+h(label)+'</span><h1>'+h(title)+'</h1><p>'+h(desc)+'</p><div class="hero-tiny" aria-hidden="true">✧ ∇ ·</div></header>';
 const metric=(value,label,symbol)=>'<article class="metric"><span aria-hidden="true">'+symbol+'</span><b>'+h(value)+'</b><small>'+h(label)+'</small></article>';
-const sidebar=(module,title)=>'<aside class="sidebar"><div class="sidebar-lead"><small>✦ MEU CADERNO DE FÍSICA</small><h2>'+h(title)+'</h2><p>Aprenda, anote e construa o seu percurso.</p></div><nav class="sidebar-nav" aria-label="Navegação do caderno"><small>VOCÊ ESTÁ EM</small><a class="active" href="#'+module+'">'+h(modules.find(x=>x.id===module)?.title||title)+'</a><small>EXPLORAR</small><a href="#home">⌂ Página inicial</a>'+modules.map(m=>'<a href="#'+m.id+'">'+m.icon+' '+h(m.title)+'</a>').join("")+'</nav><div class="sidebar-paper"><b>∴ Ideias em movimento</b><p>O universo tem mais perguntas do que respostas prontas. Continue explorando!</p></div></aside>';
+const sidebar=(module,title)=>{
+ const current=modules.find(x=>x.id===module);
+ const details=module==="resumos"?"Teoria, demonstrações, exemplos e seus próprios registros.":module==="flashcards"?"Perguntas, explicações, dificuldade e acompanhamento de revisão.":"Fontes, fichas de leitura, pesquisa e seu acervo pessoal.";
+ return '<aside class="sidebar"><div class="sidebar-lead"><small>✦ MEU CADERNO DE FÍSICA</small><h2>'+h(title)+'</h2><p>'+h(details)+'</p></div><nav class="sidebar-nav" aria-label="Navegação exclusiva do módulo"><small>ESTE MÓDULO</small><a class="active" href="#'+module+'">'+(current?.icon||"✦")+' '+h(current?.title||title)+'</a><small>MEU CADERNO</small><a href="#home">⌂ Voltar à página inicial</a></nav><div class="sidebar-paper"><b>∴ Ideias em movimento</b><p>Seu espaço é dedicado somente ao assunto que você escolheu.</p></div></aside>';
+};
 const workspace=(module,title,body)=>'<div class="page workspace theme-'+module+'">'+sidebar(module,title)+'<main class="workspace-main">'+body+'</main></div>';
 const page=(s,cls="")=>'<div class="page '+cls+'">'+s+'</div>';
 let toTimer;
@@ -43,11 +49,14 @@ function loginView(){
  '<section class="auth-box"><div class="auth-washi" aria-hidden="true"></div><div class="auth-icons" aria-hidden="true"><span>⚛</span><span>✦</span><span>∇</span></div><span class="eyebrow">'+(back?"QUE BOM TER VOCÊ DE VOLTA":"SEJA MUITO BEM-VINDO(A)")+'</span><h2>'+(back?"Seu caderno está esperando por você!":"Que alegria ter você aqui!")+'</h2><p>Para entrar, digite o mesmo e-mail que você informou na compra do <b>Caderno do Estudante de Física</b>.</p><form id="login-form" novalidate><label for="login-email">E-mail utilizado na compra</label><div class="login-field"><span aria-hidden="true">✉</span><input type="text" id="login-email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="Digite seu e-mail de compra" required aria-describedby="login-error"></div><p id="login-error" role="alert" hidden></p><button type="submit" class="btn btn-primary">Entrar no meu caderno <span>→</span></button></form><div class="auth-good">✧ Boas descobertas começam por aqui.</div></section></div></div>';
 }
 function header(active){
- return '<header class="topbar" id="topbar"><a class="top-logo" href="#home"><span class="brand-mark">φ</span><span><b>Caderno do Estudante</b><small>Física · Meu universo acadêmico</small></span></a><nav id="main-nav" class="main-nav" aria-label="Módulos do caderno">'+modules.map(m=>'<a class="'+(active===m.id?"active":"")+'" href="#'+m.id+'">'+m.icon+' '+h(m.title)+'</a>').join("")+'</nav><div class="top-actions"><a href="#busca" class="top-search" aria-label="Buscar">⌕ <span>Buscar</span></a>'+button("Sair","logout",'aria-label="Sair do caderno"',"btn-logout")+button("☰","toggleMenu",'aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"',"btn-menu")+'</div></header>';
+ const isModule=modules.some(m=>m.id===active);
+ const visible=isModule?modules.filter(m=>m.id===active):modules;
+ const links=visible.map(m=>'<a class="'+(active===m.id?"active":"")+'" href="#'+m.id+'">'+m.icon+' '+h(m.title)+'</a>').join("");
+ return '<header class="topbar" id="topbar"><a class="top-logo" href="#home"><span class="brand-mark">φ</span><span><b>Caderno do Estudante</b><small>Física · Meu universo acadêmico</small></span></a><nav id="main-nav" class="main-nav" aria-label="'+(isModule?"Módulo atual":"Módulos do caderno")+'">'+links+'</nav><div class="top-actions">'+(!isModule?'<a href="#busca" class="top-search" aria-label="Buscar">⌕ <span>Buscar</span></a>':"")+button("Sair","logout",'aria-label="Sair do caderno"',"btn-logout")+(!isModule?button("☰","toggleMenu",'aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"',"btn-menu"):"")+'</div></header>';
 }
 function route(){
  const path=decodeURIComponent((location.hash||"#home").slice(1)).split("/"),name=path[0]||"home";
- const current=name==="leitura"?"resumos":name==="revisao"?"flashcards":name==="periodo"?"resumos":name;
+ const current=name==="estudo-extra"?"resumos":name==="leitura"?"resumos":name==="revisao"?"flashcards":name==="periodo"?"resumos":name;
  return {path,name,current};
 }
 function render(preserve=false){
@@ -108,5 +117,5 @@ window.addEventListener("hashchange",()=>render(false));
 const register=(name,fn)=>routes.set(name,fn);
 const onAction=(name,fn)=>actionHandlers.set(name,fn);
 const onSubmit=(name,fn)=>submitHandlers.set(name,fn);
-window.PHY_APP={terms,subjects,refs,allBooks,byId,state,save,h,$,$$,pill,button,escArea,modules,crumb,hero,metric,sidebar,workspace,page,toast,render,update,register,onAction,onSubmit,toggle,logged,login,cardTotal};
+window.PHY_APP={terms,subjects,refs,extraSummaries,extraCards,allBooks,byId,state,save,h,$,$$,pill,button,escArea,modules,crumb,hero,metric,sidebar,workspace,page,toast,render,update,register,onAction,onSubmit,toggle,logged,login,cardTotal};
 })();
