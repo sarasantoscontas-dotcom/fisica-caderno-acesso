@@ -27,14 +27,15 @@ const escArea=a=>"area-"+String(a||"physics").normalize("NFD").replace(/[\u0300-
 const modules=[
 {id:"resumos",icon:"∑",title:"Resumos Prontos",tag:"TEORIA + EXEMPLOS",description:"Textos autorais, equações fundamentais, aplicações e espaços para anotar cada nova descoberta.",action:"Explorar resumos"},
 {id:"flashcards",icon:"λ",title:"Flashcards",tag:"REVISÃO ATIVA",description:"Perguntas comentadas, cartões interativos e acompanhamento para revisar sem decorar fórmulas isoladas.",action:"Revisar conceitos"},
-{id:"bibliografia",icon:"⌁",title:"Referências Bibliográficas",tag:"PESQUISA ACADÊMICA",description:"Livros universitários, materiais científicos abertos, instituições e a sua biblioteca pessoal.",action:"Abrir biblioteca"}
+{id:"bibliografia",icon:"⌁",title:"Referências Bibliográficas",tag:"PESQUISA ACADÊMICA",description:"Livros universitários, materiais científicos abertos, instituições e a sua biblioteca pessoal.",action:"Abrir biblioteca"},
+{id:"tcc",icon:"ℏ",title:"Meu TCC de Física",tag:"LABORATÓRIO ACADÊMICO",description:"Um universo próprio para desenvolver a monografia: escrita, referências, Kanban, simulações numéricas e geração de PDF.",action:"Entrar no ateliê de TCC"}
 ];
 const crumb=parts=>'<div class="breadcrumbs"><a href="#home">Meu caderno</a>'+parts.map(x=>' <span>›</span> '+(x.url?'<a href="'+h(x.url)+'">'+h(x.label)+'</a>':'<b>'+h(x.label)+'</b>')).join("")+'</div>';
 const hero=(label,title,desc,symbol)=>'<header class="module-hero"><span class="hero-pattern" aria-hidden="true"></span><span class="module-symbol" aria-hidden="true">'+symbol+'</span><span class="eyebrow">'+h(label)+'</span><h1>'+h(title)+'</h1><p>'+h(desc)+'</p><div class="hero-tiny" aria-hidden="true">✧ ∇ ·</div></header>';
 const metric=(value,label,symbol)=>'<article class="metric"><span aria-hidden="true">'+symbol+'</span><b>'+h(value)+'</b><small>'+h(label)+'</small></article>';
 const sidebar=(module,title)=>{
  const current=modules.find(x=>x.id===module);
- const details=module==="resumos"?"Teoria, demonstrações, exemplos e seus próprios registros.":module==="flashcards"?"Perguntas, explicações, dificuldade e acompanhamento de revisão.":"Fontes, fichas de leitura, pesquisa e seu acervo pessoal.";
+ const details=module==="resumos"?"Teoria, demonstrações, exemplos e seus próprios registros.":module==="flashcards"?"Perguntas, explicações, dificuldade e acompanhamento de revisão.":module==="tcc"?"Laboratório autônomo de pesquisa e escrita em Física.":"Fontes, fichas de leitura, pesquisa e seu acervo pessoal.";
  return '<aside class="sidebar"><div class="sidebar-lead"><small>✦ MEU CADERNO DE FÍSICA</small><h2>'+h(title)+'</h2><p>'+h(details)+'</p></div><nav class="sidebar-nav" aria-label="Navegação exclusiva do módulo"><small>ESTE MÓDULO</small><a class="active" href="#'+module+'">'+(current?.icon||"✦")+' '+h(current?.title||title)+'</a><small>MEU CADERNO</small><a href="#home">⌂ Voltar à página inicial</a></nav><div class="sidebar-paper"><b>∴ Ideias em movimento</b><p>Seu espaço é dedicado somente ao assunto que você escolheu.</p></div></aside>';
 };
 const workspace=(module,title,body)=>'<div class="page workspace theme-'+module+'">'+sidebar(module,title)+'<main class="workspace-main">'+body+'</main></div>';
