@@ -12,13 +12,15 @@ const card=r=>{
  '<div class="reference-buttons">'+(external(r.url)?'<a class="btn btn-soft" href="'+h(r.url)+'" target="_blank" rel="noopener noreferrer">Abrir fonte ou catálogo ↗</a>':"")+
  button("Copiar dados","copyBook",'data-id="'+h(r.id)+'"')+
  (r.id.startsWith("minha-")?button("Excluir","removeBook",'data-id="'+h(r.id)+'"'):"")+'</div>'+
- '<details class="reference-fiche"><summary>✎ Minha ficha de leitura</summary><label>Notas de leitura, capítulos, ideias e páginas<textarea rows="4" data-bibnote="'+h(r.id)+'" placeholder="Escreva o que encontrou na fonte e as páginas importantes para seu estudo...">'+h(notes)+'</textarea></label></details></article>';
+ '<details class="reference-fiche" '+(r.studyGuide?'open':'')+'><summary>✎ Ficha bibliográfica e minha leitura</summary>'+
+ (r.studyGuide?'<div class="bib-reading-guide"><span class="eyebrow">O QUE OBSERVAR NA LEITURA</span><p>'+h(r.studyGuide)+'</p><h4>Questão para confrontar com a fonte</h4><p>'+h(r.criticalQuestion)+'</p><small>'+h(r.citationHint||"")+'</small></div>':'')+
+ '<label>Minhas anotações, capítulos e páginas conferidas<textarea rows="4" data-bibnote="'+h(r.id)+'" placeholder="Registre o capítulo consultado, suas observações e as páginas reais da fonte...">'+h(notes)+'</textarea></label></details></article>';
 };
 const page=()=>{
  const refs=all(),types=[...new Set(refs.map(x=>x.type))].sort(),areas=[...new Set(refs.map(x=>x.area))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
  return workspace("bibliografia","Referências Bibliográficas",crumb([{label:"Referências Bibliográficas"}])+
  hero("LIVROS, CIÊNCIA E PESQUISA","Sua biblioteca de conhecimento","Consulte livros universitários, materiais abertos, bases científicas e crie fichas de leitura que fazem sentido para sua graduação.","⌁")+
- '<div class="metric-grid compact">'+metric(refs.length,"Fontes disponíveis","⌁")+metric(state.bookstars.length,"Favoritas","★")+metric(state.mybooks.length,"Minhas referências","✎")+'</div>'+
+ 
  '<section class="content-block"><div class="section-title"><div><span class="eyebrow">ENCONTRE, SALVE E ESTUDE</span><h2>Meu acervo de Física</h2></div>'+pill("Bibliografia por área")+'</div>'+
  '<div class="filter-row bibliography-filters"><label>Buscar autor, título ou assunto<input type="search" data-search placeholder="Ex.: Feynman, Quântica, NIST..."></label>'+
  '<label>Tipo de material<select data-filter-type><option value="">Todos os tipos</option>'+types.map(x=>'<option>'+h(x)+'</option>').join("")+'</select></label>'+
