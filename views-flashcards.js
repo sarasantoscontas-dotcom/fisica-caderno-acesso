@@ -16,12 +16,12 @@ function decks(){
  const total=Object.keys(state.ratings).length;
  return workspace("flashcards","Flashcards",crumb([{label:"Flashcards"}])+
  hero("REVISÃO ATIVA","Aprender também é recordar","Treine seu raciocínio com perguntas e respostas comentadas, avalie sua segurança e retorne ao que precisa aprofundar.","λ")+
- '<div class="metric-grid compact">'+metric(subjects.length,"Baralhos por disciplina","∑")+metric(cardTotal(),"Perguntas de Física","λ")+metric(total,"Cartões avaliados","✦")+'</div>'+
+ 
  '<section class="content-block"><div class="section-title"><div><span class="eyebrow">SELECIONE UM BARALHO</span><h2>Revisão organizada por assunto</h2></div>'+pill("Perguntas comentadas")+'</div>'+
  '<div class="filter-row"><label>Buscar disciplina<input type="search" data-search placeholder="Ex.: Eletromagnetismo, Quântica, Fourier..."></label><label>Período<select data-filter-term><option value="">Todos os períodos</option>'+terms.map(t=>'<option value="'+t.number+'">'+t.number+'º período</option>').join("")+'</select></label></div>'+
  '<div class="deck-grid">'+subjects.map(s=>{
   const rated=s.flashcards.filter((_,i)=>state.ratings[s.id+"/"+i]).length;
-  return '<a href="#revisao/'+s.id+'" class="deck-card filter-card '+escArea(s.area)+'" data-semester="'+s.semester+'" data-keywords="'+h((s.title+" "+s.area+" "+s.concept).toLowerCase())+'"><div class="deck-top"><span class="deck-symbol">λ</span>'+pill(s.semester+"º período")+'</div>'+pill(s.area,"soft")+'<h3>'+h(s.title)+'</h3><p>Revisão de conceitos, fórmulas e interpretação física.</p><div class="deck-bottom"><span>'+rated+'/'+s.flashcards.length+' cartões avaliados</span><b>Abrir baralho ↗</b></div></a>';
+  return '<a href="#revisao/'+s.id+'" class="deck-card filter-card '+escArea(s.area)+'" data-semester="'+s.semester+'" data-keywords="'+h((s.title+" "+s.area+" "+s.concept).toLowerCase())+'"><div class="deck-top"><span class="deck-symbol">λ</span>'+pill(s.semester+"º período")+'</div>'+pill(s.area,"soft")+'<h3>'+h(s.title)+'</h3><p>Revisão de conceitos, fórmulas e interpretação física.</p><div class="deck-bottom"><span>'+(rated?'Revisão em andamento':'Pronto para revisar')+'</span><b>Abrir baralho ↗</b></div></a>';
  }).join("")+'</div></section>');
 }
 function review([,id]){
@@ -30,7 +30,7 @@ function review([,id]){
  const done=s.flashcards.filter((_,i)=>state.ratings[id+"/"+i]).length;
  return workspace("flashcards",s.title,crumb([{label:"Flashcards",url:"#flashcards"},{label:s.title}])+
  hero(s.area+" · "+s.semester+"º PERÍODO",s.title,"Pense primeiro na resposta. Depois vire o cartão, confira o conceito e indique como foi a sua revisão.","λ")+
- '<div class="review-tools"><div>'+pill("Cartão "+(st.index+1)+" de "+st.order.length)+pill(done+" avaliados")+pill(card.tag,"soft")+'</div><div>'+button("↻ Embaralhar","shuffleCards",'data-id="'+s.id+'"')+'<a href="#flashcards" class="btn btn-soft">Outros baralhos</a></div></div>'+
+ '<div class="review-tools"><div>'+pill("Meu treino de Física")+pill(card.tag,"soft")+'</div><div>'+button("↻ Embaralhar","shuffleCards",'data-id="'+s.id+'"')+'<a href="#flashcards" class="btn btn-soft">Outros baralhos</a></div></div>'+
  '<div class="review-progress"><span style="width:'+((st.index+1)/st.order.length*100)+'%"></span></div>'+
  '<button type="button" class="flip-card '+(st.flip?"is-back":"is-front")+'" data-action="flipCard" aria-label="'+(st.flip?"Revelar pergunta":"Revelar resposta")+'"><span class="flip-atom" aria-hidden="true">⚛</span><small>'+h(st.flip?"RESPOSTA COMENTADA":"PERGUNTA DE FÍSICA")+'</small><strong>'+h(st.flip?card.answer:card.question)+'</strong><span class="flip-tip">'+(st.flip?"Toque para rever a pergunta":"Clique ou toque para revelar a resposta")+' <b>↗</b></span></button>'+
  '<div class="review-mark"><span>Como ficou seu domínio deste conceito?</span><div>'+
@@ -39,7 +39,7 @@ function review([,id]){
  button("Já domino","rateCard",'data-level="facil"',"difficulty-easy "+(rating==="facil"?"selected":""))+'</div></div>'+
  '<div class="review-arrows">'+button("← Anterior","previousCard",st.index===0?"disabled":"")+
  button(st.index===st.order.length-1?"Rever o baralho ↻":"Próximo cartão →",st.index===st.order.length-1?"restartCards":"nextCard","", "btn-primary")+'</div>'+
- '<section class="review-reference"><div><span class="eyebrow">QUER APROFUNDAR?</span><h3>Entenda a teoria por trás desta pergunta</h3><p>'+h(s.concept.slice(0,210))+'…</p></div><a class="btn btn-soft" href="#leitura/'+s.id+'/conceito">Abrir o resumo ∑</a></section>');
+ '<section class="review-reference"><div><span class="eyebrow">ESTRATÉGIA DE REVISÃO</span><h3>Raciocine antes de revelar</h3><p>'+h(s.concept.slice(0,210))+'… Procure identificar os conceitos, as unidades e as hipóteses antes de conferir a explicação.</p></div></section>');
 }
 function next(by){
  const st=state.session;
