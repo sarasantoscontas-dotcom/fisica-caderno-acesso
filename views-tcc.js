@@ -87,12 +87,29 @@ function calendarView(f){
  Array.from({length:start},()=>'<div class="tcc-day muted"></div>').join("")+
  Array.from({length:last},(_,i)=>{const day=String(i+1).padStart(2,"0"),date=calMonth+"-"+day;return '<div class="tcc-day"><span>'+day+'</span>'+f.entries.filter(e=>e.due===date).map(e=>'<a href="#tcc/tool/'+f.id+'" title="'+h(e.detail)+'">'+h(e.title)+'</a>').join("")+'</div>'}).join("")+'</div></div><div class="tcc-calendar-entries">'+f.entries.map(e=>entryEditor(f,e)).join("")+'</div>';
 }
-const linkSectionForFeature=id=>({"escrita-02":"introducao","escrita-03":"fundamentacao","escrita-04":"metodosnumericos","escrita-05":"metodologia","escrita-06":"resultados","escrita-07":"discussao","escrita-08":"resumo"})[id]||null;
+const linkSectionForFeature=id=>({"projeto-04":"problema","projeto-05":"objetivos","projeto-06":"problema","projeto-07":"justificativa","projeto-08":"justificativa","escrita-02":"introducao","escrita-03":"fundamentacao","escrita-04":"metodosnumericos","escrita-05":"metodologia","escrita-06":"resultados","escrita-07":"discussao","escrita-08":"resumo"})[id]||null;
+const metadataPanel=id=>{
+ const m=T.state().metadata;
+ const fields={
+  "projeto-01":["title","author","advisor","institution","course"],
+  "projeto-02":["title","subtitle","author","institution","course","city","year","advisor","area","line","question","hypothesis","objectives","keywords"],
+  "projeto-03":["title","subtitle","area","line"],
+  "projeto-04":["question","area","line"],
+  "projeto-05":["objectives","question"],
+  "projeto-06":["hypothesis","question"],
+  "projeto-07":["objectives","area"],
+  "projeto-08":["area","line","question"]
+ }[id];
+ if(!fields)return "";
+ const labels={title:"Título completo do TCC",subtitle:"Subtítulo",author:"Nome do estudante",institution:"Universidade ou instituição",course:"Curso e modalidade",city:"Cidade",year:"Ano",advisor:"Orientador(a)",area:"Área científica",line:"Linha de pesquisa",question:"Problema de pesquisa",hypothesis:"Hipótese central",objectives:"Objetivo geral",keywords:"Palavras-chave"};
+ return '<section class="tcc-section tcc-identity-editor"><div class="tcc-heading"><div><small>IDENTIDADE ACADÊMICA VINCULADA AO PDF</small><h2>Informações reais do seu projeto</h2></div><a href="#tcc/export">Conferir prévia ↗</a></div><div class="tcc-metadata-grid">'+fields.map(key=>field(labels[key],m[key]||"",'data-tcc-meta="'+key+'"',["title","question","hypothesis","objectives"].includes(key)?"textarea":"input")).join("")+'</div><p class="tcc-identity-help">As informações deste formulário são usadas automaticamente na capa, folha de rosto e contexto acadêmico do seu TCC.</p></section>';
+};
 function featurePage(id){
  const f=T.feature(id);if(!f)return dashboard();
  const grp=grpById(f.group),sId=linkSectionForFeature(id),s=sId?T.section(sId):null;
  return shell(f.group,'<div class="tcc-breadcrumbs"><a href="#tcc">Início</a><span>›</span><a href="#tcc/g/'+grp.id+'">'+h(grp.title)+'</a><span>›</span>'+h(f.title)+'</div>'+
  hdr("FERRAMENTA DE TCC · "+f.layout.toUpperCase(),f.title,f.description)+
+ metadataPanel(id)+
  (s?'<section class="tcc-section tcc-long-editor"><div class="tcc-heading"><div><small>DOCUMENTO PRINCIPAL VINCULADO</small><h2>'+h(s.title)+'</h2></div><a href="#tcc/chapters">Outros capítulos ↗</a></div>'+field("Texto completo da monografia — você pode editar tudo",s.body,'data-tcc-section="'+h(s.id)+'" rows="17"')+'</section>':"")+
  '<section class="tcc-section tcc-tool-surface"><div class="tcc-heading"><div><small>ESPAÇO EDITÁVEL · '+h(f.layout.toUpperCase())+'</small><h2>Meu espaço de trabalho</h2></div></div>'+byLayout(f)+'</section>');
 }
