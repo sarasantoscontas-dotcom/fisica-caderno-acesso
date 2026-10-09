@@ -1,0 +1,52 @@
+/* Onde utilizar: referência bibliográfica orientada, sem links externos. */
+.theme-bibliografia .reference-card{gap:10px;border-top-width:5px}
+.theme-bibliografia .reference-fiche.usage-fiche{
+ margin-top:8px;padding:0;overflow:hidden;background:#fff;
+ border:1.5px solid #c7e8e9;border-radius:16px 10px 17px 12px;
+ box-shadow:3px 5px 0 rgba(83,165,168,.075);
+}
+.usage-fiche>summary{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:14px 16px;cursor:pointer;list-style:none;
+ background:linear-gradient(113deg,#e8f9fa,#e9f2ff 57%,#f1edff);
+ color:#277f91;font-size:12px;font-weight:900;letter-spacing:.015em;
+}
+.usage-fiche>summary::-webkit-details-marker{display:none}
+.usage-fiche>summary::after{
+ content:"⌄";font-size:21px;font-weight:800;color:#5c83ba;
+ display:inline-flex;align-items:center;justify-content:center;
+ width:27px;height:27px;border:1px solid #b8d9ec;border-radius:50%;background:#fff;
+ transition:transform .18s ease;
+}
+.usage-fiche[open]>summary::after{transform:rotate(180deg)}
+.usage-fiche>summary:hover{background:linear-gradient(110deg,#def7f7,#e5eeff 60%,#e9e1ff)}
+.bib-usage{display:grid;gap:14px;padding:16px}
+.usage-group{min-width:0;padding:15px 14px;border-radius:13px;border:1px solid #d5e6f6;background:linear-gradient(140deg,#f3f8ff,#fff)}
+.usage-group.usage-topics{background:linear-gradient(140deg,#f6efff,#fff);border-color:#e6daf7}
+.usage-group.usage-works{background:linear-gradient(140deg,#e9faf3,#fff);border-color:#caebdd}
+.usage-group h4{margin:0 0 10px;font-size:12px;font-weight:900;color:#3c6098;letter-spacing:-.01em}
+.usage-group.usage-topics h4{color:#7b60aa}
+.usage-group.usage-works h4{color:#287d70}
+.usage-items{display:flex;flex-wrap:wrap;gap:7px;list-style:none;padding:0;margin:0}
+.usage-items li{max-width:100%;overflow-wrap:anywhere;border-radius:9px 6px 10px 7px;font-size:10.5px;font-weight:750;line-height:1.5;padding:8px 10px;border:1px solid #c8dcf2;color:#486797;background:#fff}
+.usage-topics .usage-items li{border-color:#ddc9ef;color:#70538f}
+.usage-works .usage-items{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+.usage-works .usage-items li{border-color:#bbdfd5;color:#336f69;background:rgba(255,255,255,.84);font-size:11px;padding:10px 11px}
+.usage-guidance{margin:0 0 1px;padding:13px 14px;border-radius:11px;background:#f6f9ff;border:1px solid #d6e6f8;color:#5c6e89;font-size:11px;line-height:1.8;overflow-wrap:anywhere}
+.usage-guidance strong{color:#426ba2}
+.usage-personal-notes{display:grid;gap:10px;padding:14px 16px 16px;border-top:1px dashed #d7e5f5;color:#476782;font-size:11px;font-weight:850;line-height:1.5}
+.usage-personal-notes textarea{min-height:103px;padding:12px;font-size:12px}
+.theme-bibliografia .reference-buttons{padding-top:9px}
+@media(max-width:600px){
+ .theme-bibliografia .reference-card{min-width:0}
+ .usage-fiche>summary{padding:12px;font-size:11px}
+ .bib-usage{padding:11px;gap:10px}
+ .usage-group{padding:12px 10px}
+ .usage-group h4{font-size:11px}
+ .usage-items{gap:5px}
+ .usage-items li{font-size:10px;padding:7px 8px}
+ .usage-works .usage-items li{font-size:10.5px}
+ .usage-personal-notes{padding:11px 12px}
+}
+@media(prefers-reduced-motion:reduce){.usage-fiche>summary::after{transition:none}}
+@media print{.usage-fiche{box-shadow:none!important}.usage-fiche[open] .bib-usage{break-inside:avoid}}
