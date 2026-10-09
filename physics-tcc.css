@@ -343,3 +343,44 @@ body:has(.tcc-world){background:#e9f1ff}
  .tcc-foot{font-size:17px}
 }
 @media(prefers-reduced-motion:reduce){.tcc-world *, .tcc-world *:before,.tcc-world *:after{transition:none!important;scroll-behavior:auto!important}}
+
+/* Capa do novo módulo no caderno principal: identidade própria do universo TCC */
+.home-page .module-card.module-card-4{
+ grid-column:1/-1;display:grid;grid-template-columns:minmax(235px,.38fr) minmax(0,.62fr);
+ grid-template-rows:minmax(205px,auto);min-height:218px;
+ border:2px solid #7db4e7;border-radius:26px 14px 27px 13px;
+ background:linear-gradient(115deg,#102b61,#2463a6);
+ box-shadow:8px 14px 0 rgba(71,129,206,.12),0 17px 35px rgba(22,71,139,.16);
+ transform:none;
+}
+.home-page .module-card.module-card-4 .module-cover{
+ height:100%;min-height:210px;display:flex;align-items:center;justify-content:space-between;
+ background:radial-gradient(circle at 11px 11px,rgba(218,250,255,.19) 1px,transparent 1.8px) 0 0/25px 25px,
+ linear-gradient(130deg,#0b2d70,#2758b2 67%,#1ea8bb)
+}
+.home-page .module-card.module-card-4 .module-cover:before{
+ content:"";width:220px;height:220px;border:1.5px solid rgba(203,245,255,.44);
+ border-radius:50%;top:-39px;right:-30px;box-shadow:0 0 0 28px rgba(112,205,232,.07),0 0 0 58px rgba(112,205,232,.045)
+}
+.home-page .module-card.module-card-4 .module-cover .module-symbol{color:#c1f4ff;font-size:91px;filter:drop-shadow(0 7px 12px rgba(6,17,65,.21))}
+.home-page .module-card.module-card-4 .module-cover .module-formula{font-size:24px;color:#d5fffa;text-align:right}
+.home-page .module-card.module-card-4 .module-description{
+ padding:clamp(23px,3vw,37px);background:linear-gradient(125deg,#f0f8ff,#fff 54%,#eafaf5);
+}
+.home-page .module-card.module-card-4 .module-description h3{font-size:clamp(24px,3vw,32px);color:#164b8c}
+.home-page .module-card.module-card-4 .module-description p{max-width:680px;font-size:13px;color:#5a7797}
+.home-page .module-card.module-card-4 .module-description footer i{background:linear-gradient(115deg,#215db9,#2bbbc6)}
+.home-page .module-card.module-card-4:hover{transform:translateY(-4px);box-shadow:9px 19px 0 rgba(71,129,206,.11),0 20px 36px rgba(22,71,139,.18)}
+@media(max-width:800px){
+ .home-page .module-card.module-card-4{grid-template-columns:minmax(0,1fr);grid-template-rows:150px auto}
+ .home-page .module-card.module-card-4 .module-cover{height:150px;min-height:150px}
+ .home-page .module-card.module-card-4 .module-description{padding:19px}
+ .home-page .module-card.module-card-4 .module-cover .module-symbol{font-size:64px}
+}
+@media(max-width:550px){
+ .home-page .module-card.module-card-4{grid-column:1/-1;grid-template-rows:140px auto;min-height:0}
+ .home-page .module-card.module-card-4 .module-cover{height:140px;min-height:140px}
+ .home-page .module-card.module-card-4 .module-description h3{font-size:22px}
+ .home-page .module-card.module-card-4 .module-description p{font-size:11px}
+ .home-page .module-card.module-card-4 .module-cover .module-formula{font-size:16px}
+}
