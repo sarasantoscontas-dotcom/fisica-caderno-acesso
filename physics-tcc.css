@@ -384,3 +384,12 @@ body:has(.tcc-world){background:#e9f1ff}
  .home-page .module-card.module-card-4 .module-description p{font-size:11px}
  .home-page .module-card.module-card-4 .module-cover .module-formula{font-size:16px}
 }
+
+/* Informações do autor, instituição, tema e hipótese diretamente no editor */
+.tcc-identity-editor{padding:23px;background:radial-gradient(circle at 10px 10px,rgba(79,150,209,.05) 1px,transparent 1.6px) 0 0/24px 24px,linear-gradient(135deg,#e9f6ff,#fff 75%);border:1.5px solid #c7dff5;border-radius:20px 12px 20px 12px;box-shadow:5px 9px 0 rgba(96,140,205,.07)}
+.tcc-metadata-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.tcc-metadata-grid .tcc-input-label:first-child{grid-column:1/-1}
+.tcc-metadata-grid input{min-height:42px}
+.tcc-metadata-grid textarea{min-height:93px}
+.tcc-identity-help{font-size:10px;line-height:1.7;color:#5f7c9e;margin-top:16px}
+@media(max-width:650px){.tcc-identity-editor{padding:15px 12px}.tcc-metadata-grid{grid-template-columns:minmax(0,1fr)}}
