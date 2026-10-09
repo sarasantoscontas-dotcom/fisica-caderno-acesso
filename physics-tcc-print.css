@@ -1,0 +1,68 @@
+/* Documento acadêmico do TCC · prévia + impressão A4 / Salvar como PDF */
+.tcc-export-notice{margin-top:0}
+.tcc-export-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:18px 0}
+.tcc-export-actions>.primary{font-size:13px;padding:14px 20px;min-height:49px}
+.tcc-export-meta{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+.tcc-export-meta span{font-size:10px;font-weight:850;color:#477caa;border:1px solid #c9e0f0;border-radius:30px;padding:7px 11px;background:#e8f7ff}
+.tcc-print-holder{padding:30px 10px;border:2px dashed #abc7e8;border-radius:20px;background:linear-gradient(130deg,#ebf3ff,#f8fcff);overflow:hidden}
+.tcc-export-sheet{--doctext:#161616;max-width:850px;margin:0 auto;background:#fff;box-shadow:0 20px 50px rgba(15,54,107,.19);font-family:"Times New Roman",serif;color:var(--doctext);padding:55px 62px}
+.tcc-export-sheet p{font-size:14px;line-height:1.9;text-align:justify;text-indent:22px;margin:0 0 16px;overflow-wrap:anywhere}
+.tcc-export-sheet h1,.tcc-export-sheet h2{color:#171717;font-family:"Times New Roman",serif}
+.tcc-export-sheet h2{font-size:19px;line-height:1.4;margin:23px 0 20px;font-weight:700}
+.tcc-export-sheet .tcc-print-cover{min-height:850px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:34px 0 25px}
+.tcc-print-cover h1{font-size:21px;line-height:1.5;text-transform:uppercase;max-width:580px;margin:0}
+.tcc-print-cover p{text-align:center;text-indent:0;font-size:15px}
+.tcc-print-institution{text-transform:uppercase;font-size:15px;font-weight:700;line-height:1.65}
+.tcc-print-cover-name{text-transform:uppercase;font-size:15px;font-weight:700}
+.tcc-print-title-page .tcc-print-work-description{max-width:55%;margin-left:auto;text-align:justify}
+.tcc-print-title-page .tcc-print-work-description p{font-size:13px;line-height:1.65;text-align:justify}
+.tcc-print-section{padding:25px 0;border-top:1px solid #eee;break-inside:auto}
+.tcc-print-section>p{white-space:normal}
+.tcc-print-abstract{min-height:380px}
+.tcc-print-abstract h2{text-align:center;text-transform:uppercase}
+.tcc-small-print{font-size:12px!important;color:#444;text-indent:0!important}
+.tcc-print-contents ol{padding-left:23px;font-size:14px;line-height:2}
+.tcc-print-simulation table{width:100%;border-collapse:collapse;margin:18px 0 25px;table-layout:auto;font-size:12px;break-inside:avoid}
+.tcc-print-simulation caption{text-align:left;font-style:italic;margin-bottom:8px;font-size:12px}
+.tcc-print-simulation th,.tcc-print-simulation td{border:1px solid #777;text-align:left;padding:7px 8px;overflow-wrap:anywhere}
+.tcc-print-bibliography p{text-indent:0;margin-bottom:12px}
+@media(max-width:950px){
+ .tcc-export-sheet{padding:39px 32px}
+ .tcc-print-holder{padding:12px}
+ .tcc-export-sheet .tcc-print-cover{min-height:690px}
+}
+@media(max-width:550px){
+ .tcc-export-actions{display:grid;grid-template-columns:minmax(0,1fr)}
+ .tcc-export-sheet{padding:24px 17px}
+ .tcc-export-sheet p{font-size:12px;line-height:1.8}
+ .tcc-export-sheet h2{font-size:16px}
+ .tcc-export-sheet .tcc-print-cover{min-height:540px}
+ .tcc-print-cover h1{font-size:16px}
+ .tcc-print-title-page .tcc-print-work-description{max-width:75%}
+ .tcc-print-simulation{overflow-x:auto}
+ .tcc-print-simulation table{min-width:450px}
+}
+@page{size:A4;margin:25mm 20mm 20mm 30mm}
+@media print{
+ html,body{margin:0!important;padding:0!important;background:white!important;color:black!important;height:auto!important}
+ #topbar,#toast,.tcc-rail,.tcc-topline,.tcc-foot,.tcc-page-header,.tcc-export-notice,.tcc-export-actions,.tcc-export-meta{display:none!important}
+ body #app{display:block!important;margin:0!important;padding:0!important;min-height:0!important}
+ .tcc-world{display:block!important;background:white!important;margin:0!important;padding:0!important;min-height:0!important}
+ .tcc-main,.tcc-body{display:block!important;margin:0!important;padding:0!important;max-width:none!important;overflow:visible!important}
+ .tcc-print-holder{display:block!important;margin:0!important;padding:0!important;border:0!important;background:white!important;overflow:visible!important}
+ .tcc-export-sheet{display:block!important;margin:0!important;padding:0!important;max-width:none!important;box-shadow:none!important;background:white!important;color:#000!important;font:12pt/1.5 "Times New Roman",serif!important}
+ .tcc-export-sheet h1,.tcc-export-sheet h2{font-family:"Times New Roman",serif!important;color:#000!important}
+ .tcc-export-sheet h2{font-size:12pt!important;font-weight:700!important;margin:16pt 0 12pt!important}
+ .tcc-export-sheet p{font-size:12pt!important;line-height:1.5!important;text-indent:1.25cm!important;text-align:justify!important;margin:0 0 10pt!important}
+ .tcc-print-cover{height:230mm!important;min-height:230mm!important;max-height:230mm!important;page-break-after:always!important;break-after:page!important;padding:9mm 0!important}
+ .tcc-print-cover p{font-size:12pt!important;text-align:center!important;text-indent:0!important}
+ .tcc-print-cover h1{font-size:12pt!important}
+ .tcc-print-title-page .tcc-print-work-description p{font-size:11pt!important;text-align:justify!important}
+ .tcc-print-section{padding:0!important;border:0!important;margin:0 0 10pt!important;break-inside:auto}
+ .tcc-print-abstract,.tcc-print-contents{page-break-before:always;break-before:page;min-height:0!important}
+ .tcc-print-section>h2{break-after:avoid}
+ .tcc-print-bibliography p{text-indent:0!important}
+ .tcc-print-simulation table{font-size:10pt!important;page-break-inside:avoid;max-width:100%!important}
+ .tcc-print-simulation th,.tcc-print-simulation td{font-size:9pt!important;padding:5pt!important}
+ .tcc-print-contents ol{font-size:12pt;line-height:1.8}
+}
