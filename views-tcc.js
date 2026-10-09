@@ -26,6 +26,7 @@ const nav=(active)=>{
  '<a class="'+(active==="chapters"?"selected":"")+'" href="#tcc/chapters">¶ Meu documento</a>'+
  '<a class="'+(active==="simulator"?"selected":"")+'" href="#tcc/simulator">∇ Simulador físico</a>'+
  '<a class="'+(active==="sources"?"selected":"")+'" href="#tcc/sources">⌁ Minhas fontes</a>'+
+ '<a class="'+(active==="lab-plus"?"selected":"")+'" href="#tcc/lab-plus">⚗ Cálculos e medidas</a>'+
  '<span class="tcc-rail-label">UNIVERSOS DE TRABALHO</span>'+
  groups.map(g=>'<a class="'+(active===g.id?"selected":"")+'" href="#tcc/g/'+g.id+'"><span>'+g.icon+'</span> '+h(g.title)+'</a>').join("")+
  '<span class="tcc-rail-label">FINALIZAÇÃO</span><a class="'+(active==="versions"?"selected":"")+'" href="#tcc/versions">◷ Histórico de versões</a><a class="'+(active==="export"?"selected":"")+'" href="#tcc/export">⇩ Gerar TCC em PDF</a></div>'+
@@ -35,12 +36,33 @@ const shell=(active,html)=>'<div class="tcc-world">'+nav(active)+'<div class="tc
 const grpById=id=>groups.find(g=>g.id===id);
 const featTitle=id=>T.feature(id)?.title||"Ferramenta";
 const featureCard=f=>'<a class="tcc-feature-tile" href="#tcc/tool/'+f.id+'" data-tcc-keywords="'+h((f.title+" "+f.description+" "+f.layout).toLowerCase())+'"><span class="tcc-feature-icon">'+(icons[f.layout]||"✦")+'</span><small>'+h(f.layout==="simulator"?"EXPERIMENTO NUMÉRICO":f.layout.toUpperCase())+'</small><h3>'+h(f.title)+'</h3><p>'+h(f.entries[0]?.title||"Área pronta para seu projeto")+'</p><span>Explorar ferramenta →</span></a>';
+/* Miniatura viva do documento: conteúdo real do TCC editado, sem arquivo PDF fictício. */
+function pdfStudioPreview(){
+ const m=T.state(),title=m.metadata.title||"Meu projeto de TCC",author=m.metadata.author||"Autor(a) a preencher",
+ inst=m.metadata.institution||"Instituição de ensino",year=m.metadata.year||"Ano a preencher";
+ const summary=m.sections.find(x=>x.id==="resumo")?.body||"Escreva aqui o resumo de seu TCC.",intro=m.sections.find(x=>x.id==="introducao")?.body||"A introdução aparece aqui assim que for preenchida.";
+ const sample=x=>h(String(x).replace(/\s+/g," ").slice(0,260));
+ return '<section class="tcc-pdf-showcase" aria-label="Prévia interativa do documento de conclusão de curso">'+
+ '<div class="tcc-pdf-showcase-top"><div><span class="tcc-overline">✦ SEU TRABALHO JÁ GANHA FORMA</span><h2>Veja seu TCC virando um documento</h2><p>Uma mini prévia das páginas do TCC, usando os textos do seu próprio projeto. Clique nas páginas para ver o documento completo e gerar seu PDF.</p>'+
+ '<div class="tcc-preview-actions"><a href="#tcc/export" class="tcc-btn tcc-preview-primary">✦ Visualizar e gerar PDF ↗</a><a href="#tcc/chapters" class="tcc-btn tcc-preview-secondary">✎ Continuar editando</a></div>'+
+ '<div class="tcc-preview-notes"><span>◈ Capa e resumo</span><span>∇ Capítulos</span><span>⌁ Resultados simulados</span></div>'+
+ '</div><span class="tcc-pdf-seal" aria-hidden="true">PDF<br><small>↗</small></span></div>'+
+ '<a href="#tcc/export" class="tcc-paper-preview" aria-label="Abrir mini prévia do TCC e acessar geração em PDF"><div class="tcc-paper-scene">'+
+ '<div class="tcc-mini-sheet tcc-mini-side-2"><span>RESUMO</span><div class="tcc-mini-line">'+sample(summary)+'</div><div class="tcc-mini-fauxline"></div><div class="tcc-mini-fauxline short"></div><b>Palavras-chave: oscilador; cálculo numérico.</b></div>'+
+ '<div class="tcc-mini-sheet tcc-mini-side-3"><span>INTRODUÇÃO</span><div class="tcc-mini-line">'+sample(intro)+'</div><div class="tcc-mini-fauxline"></div><b>m·x″ + b·x′ + k·x = 0</b><small>Modelo físico e método computacional</small></div>'+
+ '<div class="tcc-mini-sheet tcc-mini-cover"><span>'+h(inst)+'</span><div><small>TRABALHO DE CONCLUSÃO DE CURSO</small><h3>'+h(title)+'</h3><em>Física · Laboratório Acadêmico</em></div><footer><b>'+h(author)+'</b><small>'+h(year)+'</small></footer></div>'+
+ '<div class="tcc-preview-float">✧ Clique para folhear o TCC completo →</div></div></a>'+
+ '<p class="tcc-preview-hint">A miniatura é uma pré-visualização visual; o arquivo PDF é preparado na tela de exportação, com a opção “Salvar como PDF” do navegador.</p></section>';
+}
+
 function dashboard(){
  const m=T.state(),p=T.progress();
  return shell("dashboard",'<section class="tcc-hero"><div class="tcc-hero-text"><span class="tcc-overline">✦ BEM-VINDO AO SEU LABORATÓRIO DE PESQUISA</span><h1>Do primeiro problema à <em>última equação.</em></h1><p>Um novo universo dentro do Caderno de Física. Desenvolva seu projeto, organize o método, escreva os capítulos, explore suas simulações e prepare a defesa em um mesmo lugar.</p><div class="tcc-hero-actions"><a class="tcc-btn primary" href="#tcc/chapters">Continuar escrevendo ↗</a><a class="tcc-btn ghost" href="#tcc/simulator">Abrir simulador ∇</a></div></div><div class="tcc-hero-art" aria-hidden="true"><div class="tcc-orbit"><b>ℏ</b><span>∇</span><span>∑</span><span>λ</span></div><div class="tcc-postit p1">✎ hipótese → método</div><div class="tcc-postit p2">E(t) = ½mv² + ½kx²</div></div></section>'+
+ pdfStudioPreview()+
  '<div class="tcc-model-hint"><b>✦ Seu TCC-modelo já está preenchido.</b><span>Os textos, tarefas e cálculos são exemplos acadêmicos editáveis. Você pode personalizar tudo, limpar o exemplo ou restaurá-lo quando quiser. Resultados de simulação não são dados experimentais.</span></div>'+
  '<section class="tcc-section"><div class="tcc-heading"><div><small>ATELIÊ DE PESQUISA</small><h2>Meu projeto atual</h2></div><a class="tcc-quiet" href="#tcc/g/projeto">Configurar projeto →</a></div><div class="tcc-project-card"><div class="tcc-project-top"><span>FÍSICA COMPUTACIONAL</span><span>◈ PROJETO EDITÁVEL</span></div><h3>'+h(m.metadata.title||"Título do TCC a definir")+'</h3><p>'+h(m.metadata.question||"Defina uma pergunta física investigável.")+'</p><div class="tcc-project-tags"><span>∇ '+h(m.metadata.area||"Área a definir")+'</span><span>✎ '+h(m.metadata.stage||"Desenvolvimento")+'</span></div><div class="tcc-project-links"><a href="#tcc/chapters">Abrir documento →</a><a href="#tcc/g/organizacao">Organizar etapas →</a></div></div></section>'+
  '<section class="tcc-section"><div class="tcc-heading"><div><small>AMBIENTES DE TRABALHO</small><h2>Uma oficina para cada etapa</h2></div></div><div class="tcc-group-grid">'+groups.map((g,i)=>'<a class="tcc-group-card gc-'+i+'" href="#tcc/g/'+g.id+'"><span>'+g.icon+'</span><small>ÁREA DE ESTUDO E PRODUÇÃO</small><h3>'+h(g.title)+'</h3><p>'+h(g.description)+'</p><b>Entrar no ambiente ↗</b></a>').join("")+'</div></section>'+
+ '<section class="tcc-section tcc-discover-hub"><div class="tcc-heading"><div><small>EXPERIMENTE MAIS POSSIBILIDADES</small><h2>Espaços para criar, testar e apresentar</h2></div></div><div class="tcc-discover-cards"><a href="#tcc/g/cientifica"><span>⚗</span><b>Oficina de investigação</b><small>Hipóteses, cenários e reprodutibilidade</small></a><a href="#tcc/g/publicacao"><span>✧</span><b>Publicar e apresentar</b><small>Artigo, pôster, divulgação e pós-banca</small></a><a href="#tcc/lab-plus"><span>∇</span><b>Cálculos e medidas</b><small>Incertezas, regressão e amortecimento</small></a></div></section>'+
  '<section class="tcc-section"><div class="tcc-heading"><div><small>ATALHOS DE PRODUÇÃO</small><h2>Retomar uma atividade</h2></div></div><div class="tcc-fast-grid"><a href="#tcc/tool/organizacao-01">▦ Kanban do TCC <span>→</span></a><a href="#tcc/tool/organizacao-06">▦ Agenda de entregas <span>→</span></a><a href="#tcc/tool/pesquisa-03">⌁ Fichamentos <span>→</span></a><a href="#tcc/tool/defesa-04">? Perguntas da banca <span>→</span></a><a href="#tcc/versions">◷ Versões do projeto <span>→</span></a><a href="#tcc/export">⇩ Gerar PDF <span>→</span></a></div></section>'+
  '<section class="tcc-section"><div class="tcc-heading"><div><small>PERSONALIZAÇÃO</small><h2>O modelo é seu para transformar</h2></div></div><div class="tcc-manage"><div><h3>Gerenciar conteúdo de exemplo</h3><p>Salve um backup antes de limpar, se desejar. A opção Limpar esvazia textos demonstrativos, referências e cartões do módulo TCC, mantendo a estrutura e as ferramentas. Restaurar recupera o modelo de Física original.</p></div><div>'+action("Fazer backup JSON","backup")+action("Limpar conteúdo de exemplo","clearDemo",'',"warn")+action("Restaurar exemplo original","resetDemo")+'</div></div></section>');
 }
@@ -185,6 +207,7 @@ function show([,part,id]){
  if(part==="sources")return sourceManager();
  if(part==="versions")return versions();
  if(part==="simulator")return simulator();
+ if(part==="lab-plus")return window.PHY_TCC_LAB_PLUS?window.PHY_TCC_LAB_PLUS.render(id):shell("lab-plus",hdr("FERRAMENTAS DE LABORATÓRIO","Calculadoras científicas","Preparando o laboratório interativo."));
  if(part==="export")return window.PHY_TCC_EXPORT?window.PHY_TCC_EXPORT.render():shell("export",hdr("EXPORTAÇÃO","Gerar TCC","Preparando a visualização do documento."));
  return dashboard();
 }
