@@ -6,12 +6,13 @@ const KEY="fisica-caderno-tcc-laboratorio-v1";
 const seed=window.PHY_TCC_SEED,def=window.PHY_TCC_FEATURES;
 if(!seed||!def)throw Error("TCC: conteúdo base não carregado");
 const clone=x=>JSON.parse(JSON.stringify(x));
-const fresh=()=>({...clone(seed),features:Object.fromEntries(def.features.map(f=>[f.id,clone(f)])),snapshots:[],timelineNotes:[],updated:new Date().toISOString(),lastResults:null,version:2});
+const initialLabPlus=()=>({uncertainty:{V:"5.0",I:"1.00",uV:"0.10",uI:"0.02",rho:"0"},regression:{pairs:"0,0.02\n0.25,0.38\n0.50,0.77\n0.75,1.13\n1.00,1.49"},damping:{m:"1",k:"16",b:"0.8"}});
+const fresh=()=>({...clone(seed),labPlus:initialLabPlus(),features:Object.fromEntries(def.features.map(f=>[f.id,clone(f)])),snapshots:[],timelineNotes:[],updated:new Date().toISOString(),lastResults:null,version:2});
 let model=fresh();
 try{
  const previous=JSON.parse(localStorage.getItem(KEY)||"null");
  if(previous&&typeof previous==="object"&&previous.metadata&&Array.isArray(previous.sections)){
-  model={...model,...previous,metadata:{...model.metadata,...previous.metadata},simulation:{...model.simulation,...previous.simulation},sections:previous.sections,features:{...model.features,...previous.features},bibliography:Array.isArray(previous.bibliography)?previous.bibliography:model.bibliography,snapshots:Array.isArray(previous.snapshots)?previous.snapshots:[]};
+  model={...model,...previous,metadata:{...model.metadata,...previous.metadata},simulation:{...model.simulation,...previous.simulation},sections:previous.sections,features:{...model.features,...previous.features},bibliography:Array.isArray(previous.bibliography)?previous.bibliography:model.bibliography,snapshots:Array.isArray(previous.snapshots)?previous.snapshots:[],labPlus:{...initialLabPlus(),...(previous.labPlus||{})}};
  }
 }catch(e){/* default preserved if stored data is invalid */}
 const state=()=>model;
@@ -22,13 +23,21 @@ const clear=()=>{
  model.sections=seed.sections.map(x=>({...x,body:""}));
  model.bibliography=[];
  model.features=Object.fromEntries(def.features.map(f=>[f.id,{...clone(f),notes:"",entries:[]}]));
- model.lastResults=null;model.snapshots=[];model.timelineNotes=[];save();
+ model.lastResults=null;model.snapshots=[];model.timelineNotes=[];
+ model.labPlus={uncertainty:{V:"",I:"",uV:"",uI:"",rho:""},regression:{pairs:""},damping:{m:"",k:"",b:""}};save();
 };
 const h=x=>String(x??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const feature=id=>model.features[id]||null;
 const section=id=>model.sections.find(s=>s.id===id);
 const updateMeta=(key,value)=>{if(Object.prototype.hasOwnProperty.call(model.metadata,key)){model.metadata[key]=String(value);save();return true}return false};
 const updateBody=(id,value)=>{const s=section(id);if(s){s.body=String(value);save();return true}return false};
+const updateLabPlus=(tool,key,value)=>{
+ const allowed={uncertainty:["V","I","uV","uI","rho"],regression:["pairs"],damping:["m","k","b"]};
+ if(!allowed[tool]?.includes(key))return false;
+ if(!model.labPlus||typeof model.labPlus!=="object")model.labPlus=initialLabPlus();
+ model.labPlus[tool]={...(model.labPlus[tool]||{}),[key]:String(value).slice(0,5000)};
+ return save();
+};
 const updateParam=(key,value)=>{if(!["m","k","b","x0","v0","T","h"].includes(key))return false;const n=Number(String(value).trim().replace(",","."));if(!Number.isFinite(n))return false;model.simulation[key]=n;save();return true};
 const updateEntry=(id,entryId,key,value)=>{
  const f=feature(id),e=f?.entries.find(e=>e.id===entryId);
@@ -117,5 +126,5 @@ const sweep=()=>{
  }
  model.simulation.h=previous;return rows;
 };
-window.PHY_TCC={seed,groups:def.groups,features:def.features,key:KEY,state,save,reset,clear,h,feature,section,updateMeta,updateBody,updateParam,updateEntry,addEntry,removeEntry,shiftStatus,updateFeatureNote,addRef,updateRef,removeRef,snapshot,restoreSnapshot,safeBackup,importBackup,progress,numerical,sweep};
+window.PHY_TCC={seed,groups:def.groups,features:def.features,key:KEY,state,save,reset,clear,h,feature,section,updateMeta,updateBody,updateParam,updateEntry,addEntry,removeEntry,shiftStatus,updateFeatureNote,addRef,updateRef,removeRef,snapshot,restoreSnapshot,safeBackup,importBackup,progress,numerical,sweep,updateLabPlus};
 })();
