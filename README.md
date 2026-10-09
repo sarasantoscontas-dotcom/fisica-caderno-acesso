@@ -80,3 +80,24 @@ Importar **`sarasantoscontas-dotcom/fisica-caderno-acesso`**, branch `main`, na 
 Revisão estrutural realizada: scripts avaliados em ambiente JS simulado, login e retorno, 8 períodos, leitura de fundamento/aplicação, salvamento de notas, favoritos, avaliação de flashcards, inclusão de referência e filtros. Verificação de CSS e assets vinculados. **É recomendável conferir visualmente o layout e a publicação em navegador real, especialmente em diferentes celulares e tablets.**
 
 Próximas etapas possíveis: TCC, pesquisa, Controle de Semestres, estágio/docência, laboratórios e mais módulos de Física — sempre de forma aditiva, sem apagar os três já entregues.
+
+
+## Evolução do caderno: isolamento e biblioteca científica (09/10/2026)
+
+**Regra permanente para todos os novos módulos:** cada área é um ambiente independente, com ferramentas, conteúdos, navegação interna e histórico pertencentes a ela. As rotas `#resumos`, `#periodo/...`, `#leitura/...` e `#estudo-extra/...` são de Resumos; as rotas `#flashcards`, `#revisao/...`, `#revisao-extra/...` pertencem a Flashcards; `#bibliografia` pertence exclusivamente à Bibliografia. A home é o ponto de distribuição entre módulos. A barra superior de uma área aberta apresenta apenas aquela área, e a lateral não lista módulos irmãos. Sem CTA cruzado de Resumos para Flashcards, ou vice-versa.
+
+**Sem contadores visíveis:** home, listagens, fichas e painéis de cada módulo não exibem números totais de disciplinas, resumos, cartões, baralhos, fichas, recursos, leituras realizadas ou avaliadas. O número ordinal de **período acadêmico** continua identificado apenas por ser necessário à organização curricular. O progresso continua sendo salvo, com mensagens qualitativas e barras visuais, sem inventário numérico.
+
+**Expansão exclusiva dos módulos:**
+- `physics-extension-study.js` fornece 40 **resumos especializados**, além dos resumos já existentes, com fundamentação técnica, desenvolvimento do modelo, equações, exemplos, advertências, perguntas comentadas e fontes de consulta acadêmica. Os 80 flashcards novos são perguntas distintas vinculadas a esses assuntos.
+- `views-resumos-extra.js` apresenta as novas leituras e suas páginas completas na rota `#estudo-extra/<id>`, cada qual com favoritar, marcar como estudado, imprimir e campo de notas isolado, reutilizando o estado sem apagar leituras anteriores.
+- `views-flashcards-extra.js` apresenta os 80 novos cartões em baralhos temáticos exclusivamente no módulo Flashcards, com virar, revisão, navegação, marcação por dificuldade e progresso salvo separadamente.
+- `physics-extension-bibliography.js` acrescenta **40 fichas de leitura bibliográfica** sobre seções específicas das coleções reais MIT OpenCourseWare 8.01SC (Mecânica), 8.04 (Quântica), 8.333 (Mecânica Estatística) e 8.311 (Eletromagnetismo). As fichas possuem orientação, pergunta crítica e espaço para conferência de citações e notas; várias fichas correspondem a capítulos diferentes de **uma mesma coleção de referência**, e não se apresentam como 40 livros distintos.
+- `views-bibliografia.js` exibe as fichas guiadas junto ao acervo existente, sem alterar os registros dos estudantes.
+- `physics-modules-isolated.css` adiciona identidade editorial azul, lilás, menta e papelaria científica aos novos cartões e comportamentos responsivos. O `index.html` importa tudo em ordem.
+
+**Referências de consulta identificadas:** MIT OpenCourseWare Classical Mechanics 8.01SC: https://ocw.mit.edu/courses/8-01sc-classical-mechanics-fall-2016/pages/online-textbook/ ; Quantum Physics I 8.04: https://ocw.mit.edu/courses/8-04-quantum-physics-i-spring-2016/pages/lecture-notes/ ; Statistical Mechanics I 8.333: https://ocw.mit.edu/courses/8-333-statistical-mechanics-i-statistical-mechanics-of-particles-fall-2013/pages/lecture-notes/ ; Electromagnetic Theory 8.311: https://ocw.mit.edu/courses/8-311-electromagnetic-theory-spring-2004/pages/calendar/ ; BIPM SI Brochure: https://www.bipm.org/en/web/guest/publications/si-brochure . Os textos são sínteses originais de estudo; não são reproduções integrais das fontes. Confirme edições, enunciados e condições de modelos nos materiais originais.
+
+**Garantias técnicas verificadas:** simulação de carregamento dos 12 scripts; login inicial; rotas principais e rotas novas; menus e links sem cruzamento entre os três módulos; persistência de leitura, favorito e avaliação dos novos materiais; ausência de métricas numéricas nas páginas avaliadas. A renderização gráfica em um navegador físico e o comportamento de publicação dependem da versão hospedada.
+
+**Arquitetura para expansões futuras:** novas áreas devem ter datasets próprios e `views-<modulo>.js` separados, persistir dados por chaves próprias no estado e não incluir navegação cruzada dentro de outros módulos.
