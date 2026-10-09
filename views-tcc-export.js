@@ -12,7 +12,7 @@ const sectionHTML=s=>{
 };
 function bibliography(){
  const b=T.state().bibliography;
- return '<section class="tcc-print-section tcc-print-bibliography"><h2>Bibliografia cadastrada no projeto</h2><p class="tcc-small-print">Confira edição, dados editoriais e fontes realmente consultadas antes da submissão.</p>'+
+ return '<section class="tcc-print-section tcc-print-bibliography"><h2>Apêndice B — Acervo de consulta do projeto</h2><p class="tcc-small-print">Confira edição, dados editoriais e fontes realmente consultadas antes da submissão.</p>'+
  (b.length?b.map(r=>'<p>'+h([r.author,r.title,r.year!=="a conferir"?r.year:"",r.url].filter(Boolean).join(". "))+'.</p>').join(""):'<p>Referências acadêmicas a inserir após consulta e verificação.</p>')+'</section>';
 }
 function simulationTable(){
@@ -25,7 +25,9 @@ function simulationTable(){
   [["euler","Euler explícito"],["cromer","Euler–Cromer"],["rk4","Runge–Kutta 4"]].map(([id,name])=>'<tr><td>'+h(name)+'</td><td>'+sf(r.metrics[id].maxError)+'</td><td>'+sf(r.metrics[id].finalError)+'</td><td>'+sf(r.metrics[id].energyFinal)+'</td></tr>').join("")+'</tbody></table>'+
   '<table><caption>Ensaio de refinamento de passo</caption><thead><tr><th>Passo h (s)</th><th>Erro máximo Euler (m)</th><th>Erro máximo Cromer (m)</th><th>Erro máximo RK4 (m)</th></tr></thead><tbody>'+
   rows.map(row=>row.error?'<tr><td>'+h(row.h)+'</td><td colspan="3">'+h(row.error)+'</td></tr>':'<tr><td>'+sf(row.h)+'</td><td>'+sf(row.metrics.euler.maxError)+'</td><td>'+sf(row.metrics.cromer.maxError)+'</td><td>'+sf(row.metrics.rk4.maxError)+'</td></tr>').join("")+'</tbody></table>'+
-  '<p>Fonte: elaboração e cálculo numérico do autor no Caderno de Física; comparar com sua própria reprodução antes da entrega institucional.</p></section>';
+  '<div class="tcc-export-figures">'+window.PHY_TCC_UI.chart(r,"x","Figura demonstrativa — Deslocamento × tempo","posição (m)")+
+ window.PHY_TCC_UI.chart(r,"E","Figura demonstrativa — Energia mecânica × tempo","energia (J)")+'</div>'+
+ '<p>Fonte: elaboração e cálculo numérico do autor no Caderno de Física; comparar com sua própria reprodução antes da entrega institucional.</p></section>';
  }catch(e){return '<section class="tcc-print-section"><h2>Quadros de simulação numérica</h2><p>Dados indisponíveis para parâmetros atuais: '+h(e.message)+'. Ajuste o regime no simulador antes de finalizar o documento.</p></section>'}
 }
 function documentHTML(){
