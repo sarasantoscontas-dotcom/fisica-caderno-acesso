@@ -95,7 +95,7 @@ function project(){
  return shell("pesquisa","project",hdr("MEU PROJETO PREENCHIDO","A investigação começa com uma boa pergunta","Estudo-modelo de Física Computacional. Adapte para iniciação científica, mestrado ou doutorado e registre critérios de validade.")+
  '<div class="phy-panel phy-project"><span class="phy-eyebrow">FORMULÁRIO DE INVESTIGAÇÃO</span><div class="phy-edit-grid">'+info.map(([label,key])=>field(label,"pesquisa","project",key,p[key]||"",key==="date"?"date":"text")).join("")+'</div>'+
  '<div class="phy-note-illustration"><b>Modelo científico de referência</b><p>m x″ + b x′ + kx = 0 · E = ½mv² + ½kx² · dE/dt = −bv². Registre quais relações você efetivamente verificou e em quais condições elas valem.</p></div></div>'+
- '<div class="phy-section"><div class="phy-section-head"><div><small>PERGUNTAS E ENTREGAS</small><h2>Roteiro da investigação</h2></div></div><div class="phy-entry-stack">'+(p.steps||[]).map((x,i)=>'<article class="phy-entry"><h3>'+h(x.task)+'</h3><span class="phy-chip">'+h(x.stage)+'</span><p>'+h(x.detail)+'</p></article>').join("")+'</div></div>'+
+ '<div class="phy-section"><div class="phy-section-head"><div><small>PERGUNTAS E ENTREGAS</small><h2>Roteiro editável da investigação</h2></div>'+b("+ Nova etapa","projectStepAdd","","primary")+'</div><div class="phy-entry-stack">'+(p.steps||[]).map((x,i)=>'<article class="phy-entry">'+field("Nome da etapa","pesquisa","step:"+x.id,"task",x.task)+field("Situação","pesquisa","step:"+x.id,"stage",x.stage)+field("Procedimento e evidência","pesquisa","step:"+x.id,"detail",x.detail,"textarea")+'<div>'+b("Excluir etapa","projectStepRemove",'data-step="'+x.id+'"',"danger")+'</div></article>').join("")+'</div></div>'+
  '<div class="phy-return">'+link("Explorar meus protocolos →","pesquisa/g/Protocolos%20e%20dados")+'</div>');
 }
 function courses(){
@@ -103,7 +103,7 @@ function courses(){
  return shell("semestre","courses",hdr("MATRIZ E ORGANIZAÇÃO CURRICULAR","Meu controle semestral de Física","Disciplinas-modelo com dependências, objetivos, horas e status editáveis. Ajuste tudo ao Projeto Pedagógico do seu curso.")+
  '<div class="phy-panel"><div class="phy-section-head"><div><small>MEU SEMESTRE</small><h2>Planejamento pessoal</h2></div></div><div class="phy-edit-grid">'+[["Período","term"],["Curso","course"],["Instituição","institution"],["Objetivos do período","focus"]].map(([label,key])=>field(label,"semestre","semester",key,d.semester[key]||"")).join("")+'</div>'+field("Minhas observações","semestre","semester","notes",d.semester.notes||"","textarea")+'</div>'+
  '<section class="phy-panel"><div class="phy-section-head"><div><small>MINHAS DISCIPLINAS</small><h2>Matriz pessoal e acompanhamento</h2></div>'+b("+ Adicionar disciplina","rowAdd",'data-id="semestre" data-kind="courses"',"primary")+'</div>'+
- '<div class="phy-overflow"><table class="phy-table phy-courses-table"><thead><tr><th>Disciplina</th><th>Período</th><th>Carga horária</th><th>Pré-requisitos</th><th>Status</th><th>Objetivo e atenção</th><th></th></tr></thead><tbody>'+d.courses.map(c=>'<tr><td>'+field("","semestre","course:"+c.id,"name",c.name)+'</td><td>'+field("","semestre","course:"+c.id,"semester",c.semester)+'</td><td>'+field("","semestre","course:"+c.id,"hours",c.hours,"number")+'</td><td>'+field("","semestre","course:"+c.id,"prerequisite",c.prerequisite)+'</td><td>'+field("","semestre","course:"+c.id,"stage",c.stage)+'</td><td>'+field("","semestre","course:"+c.id,"goal",c.goal)+'</td><td>'+b("Excluir","rowRemove",'data-id="semestre" data-kind="courses" data-rid="'+c.id+'"',"danger")+'</td></tr>').join("")+'</tbody></table></div></section>'+
+ '<div class="phy-overflow"><table class="phy-table phy-courses-table"><thead><tr><th>Disciplina</th><th>Período</th><th>Créditos</th><th>Carga horária</th><th>Nota</th><th>Presença</th><th>Pré-requisitos</th><th>Status</th><th>Objetivo e atenção</th><th></th></tr></thead><tbody>'+d.courses.map(c=>'<tr><td>'+field("","semestre","course:"+c.id,"name",c.name)+'</td><td>'+field("","semestre","course:"+c.id,"semester",c.semester)+'</td><td>'+field("","semestre","course:"+c.id,"credits",c.credits,"number")+'</td><td>'+field("","semestre","course:"+c.id,"hours",c.hours,"number")+'</td><td>'+field("","semestre","course:"+c.id,"grade",c.grade)+'</td><td>'+field("","semestre","course:"+c.id,"attendance",c.attendance)+'</td><td>'+field("","semestre","course:"+c.id,"prerequisite",c.prerequisite)+'</td><td>'+field("","semestre","course:"+c.id,"stage",c.stage)+'</td><td>'+field("","semestre","course:"+c.id,"goal",c.goal)+'</td><td>'+b("Excluir","rowRemove",'data-id="semestre" data-kind="courses" data-rid="'+c.id+'"',"danger")+'</td></tr>').join("")+'</tbody></table></div></section>'+
  '<div class="phy-return">'+link("Organizar tarefas →","semestre/g/Rotina%20e%20tarefas")+'</div>');
 }
 const masteryLabels=["Preciso estudar","Estou começando","Consigo com ajuda","Domino sozinho"];
@@ -118,7 +118,7 @@ function tests(selected){
  field("Assunto","provas","topic:"+t.id+":"+x.id,"name",x.name)+
  '<label class="phy-field"><span>Meu domínio</span><select data-st-id="provas" data-st-area="topic:'+t.id+':'+x.id+'" data-st-key="mastery">'+masteryLabels.map((a,i)=>'<option value="'+i+'" '+(Number(x.mastery)===i?"selected":"")+'>'+h(a)+'</option>').join("")+'</select></label>'+
  '<label class="phy-field"><span>Importância na prova</span><select data-st-id="provas" data-st-area="topic:'+t.id+':'+x.id+'" data-st-key="importance">'+[["1","Complementar"],["2","Importante"],["3","Fundamental"]].map(([v,label])=>'<option value="'+v+'" '+(Number(x.importance)===Number(v)?"selected":"")+'>'+label+'</option>').join("")+'</select></label>'+
- field("Minha atividade de revisão","provas","topic:"+t.id+":"+x.id,"tasks",x.tasks,"textarea")+'</section>').join("")+'</div></article>').join("")+'</section>'+
+ field("Minha atividade de revisão","provas","topic:"+t.id+":"+x.id,"tasks",x.tasks,"textarea")+'<div>'+b("Excluir assunto","topicRemove",'data-test="'+t.id+'" data-topic="'+x.id+'"',"danger")+'</div></section>').join("")+'</div></article>').join("")+'</section>'+
  '<div class="phy-plan-prompt"><span aria-hidden="true">✦ ∇ λ</span><div><h2>Seu diagnóstico já pode virar um plano de estudos!</h2><p>As disciplinas com menor domínio, maior importância e provas próximas recebem atenção especial.</p></div>'+link("Gerar meu plano para PDF ↗","provas/plano","primary")+'</div>');
 }
 const brdate=x=>x?x.split("-").reverse().join("/"):"";
@@ -163,6 +163,7 @@ function changed(e){
  else if(d.stArea?.startsWith("course:"))done=S.rowSet(id,"courses",d.stArea.slice(7),d.stKey,t.value);
  else if(d.stArea?.startsWith("test:"))done=S.rowSet(id,"tests",d.stArea.slice(5),d.stKey,t.value);
  else if(d.stArea?.startsWith("topic:")){const [,testId,topicId]=d.stArea.split(":");done=S.topicSet(testId,topicId,d.stKey,t.value)}
+ else if(d.stArea?.startsWith("step:"))done=S.projectStepSet(d.stArea.slice(5),d.stKey,t.value);
  else if(d.stArea)done=S.set(id,d.stArea,d.stKey,t.value);
  if(done){const el=A.$("#phy-saved-status");if(el)el.textContent="Minha edição foi salva ✓";}
 }
@@ -177,6 +178,9 @@ const actions={
  rowAdd:b=>{S.rowAdd(b.dataset.id,b.dataset.kind);rerender()},
  rowRemove:b=>{if(!window.confirm("Excluir esta disciplina ou avaliação?"))return;S.rowRemove(b.dataset.id,b.dataset.kind,b.dataset.rid);rerender()},
  topicAdd:b=>{S.topicAdd(b.dataset.tid);rerender()},
+ topicRemove:b=>{if(!window.confirm("Excluir somente este assunto da prova?"))return;S.topicRemove(b.dataset.test,b.dataset.topic);rerender()},
+ projectStepAdd:()=>{S.projectStepAdd();rerender()},
+ projectStepRemove:b=>{if(!window.confirm("Excluir somente esta etapa da pesquisa?"))return;S.projectStepRemove(b.dataset.step);rerender()},
  printPlan:()=>{window.print();},
  backup:b=>{const txt=S.backup(b.dataset.id);if(!window.Blob||!window.URL?.createObjectURL)return A.toast("Não foi possível preparar o backup.");const url=URL.createObjectURL(new Blob([txt],{type:"application/json"}));const a=document.createElement("a");a.href=url;a.download="caderno-fisica-"+b.dataset.id+"-backup.json";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)},
  reset:b=>{if(!window.confirm("Restaurar dados de exemplo deste módulo? Suas edições serão substituídas."))return;S.reset(b.dataset.id);rerender()},
