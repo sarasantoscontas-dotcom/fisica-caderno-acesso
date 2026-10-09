@@ -4,25 +4,45 @@
 const A=window.PHY_APP,{state,h,pill,button,crumb,hero,metric,workspace,register,onAction,onSubmit,update,toast,toggle}=A;
 const all=()=>A.allBooks();
 const favorite=r=>state.bookstars.includes(r.id);
-const external=url=>/^https:\/\//i.test(url||"");
+const usageMap=window.PHY_BIB_USAGE||{};
+const relevantUsage=r=>{
+ const linked=usageMap[r.id];
+ if(linked){
+  const subjects=linked.subjects||[],topics=linked.topics||[];
+  const works=(linked.works&&linked.works.length)?linked.works:[
+   "Trabalho ou seminário sobre "+r.topic,
+   "Atividade de estudo: "+r.studyGuide,
+   "Discussão de pesquisa: "+r.criticalQuestion
+  ];
+  return {subjects,topics,works};
+ }
+ // As fontes adicionadas pelos estudantes mantêm a mesma ferramenta, mesmo sem ficha prévia.
+ const subject=r.topic&&r.topic!=="Leitura pessoal em Física"?r.topic:"Física aplicada ao tema escolhido";
+ return {subjects:[subject,r.area||"Pesquisa acadêmica","Metodologia científica","Trabalhos de graduação"],topics:[r.topic||subject,"Conceitos e modelos relacionados","Referências para discussão teórica"],works:["Fundamentação de um trabalho sobre "+subject,"Seminário, relatório ou fichamento relativo à obra","Estudo orientado com as observações do próprio estudante"]};
+};
+const usageList=values=>'<ul class="usage-items">'+values.map(v=>'<li>'+h(v)+'</li>').join("")+'</ul>';
 const card=r=>{
  const notes=state.booknotes[r.id]||"";
- return '<article class="reference-card filter-card" data-bib-id="'+h(r.id)+'" data-type="'+h(r.type)+'" data-area="'+h(r.area)+'" data-keywords="'+h((r.title+" "+r.authors+" "+r.topic+" "+r.type+" "+r.area).toLowerCase())+'"><div class="reference-head"><span class="reference-icon">⌁</span><div>'+pill(r.type)+pill(r.area,"soft")+'</div>'+button(favorite(r)?"★":"☆","starBook",'data-id="'+h(r.id)+'" aria-label="'+(favorite(r)?"Remover dos favoritos":"Favoritar fonte")+'"',"icon-btn")+'</div>'+
- '<h3>'+h(r.title)+'</h3><p class="reference-authors">'+h(r.authors)+'</p><p class="reference-topic">'+h(r.topic)+'</p><p class="reference-note">'+h(r.note||"Minha fonte bibliográfica para estudar e pesquisar.")+'</p>'+
- '<div class="reference-buttons">'+(external(r.url)?'<a class="btn btn-soft" href="'+h(r.url)+'" target="_blank" rel="noopener noreferrer">Abrir fonte ou catálogo ↗</a>':"")+
- button("Copiar dados","copyBook",'data-id="'+h(r.id)+'"')+
- (r.id.startsWith("minha-")?button("Excluir","removeBook",'data-id="'+h(r.id)+'"'):"")+'</div>'+
- '<details class="reference-fiche" '+(r.studyGuide?'open':'')+'><summary>✎ Ficha bibliográfica e minha leitura</summary>'+
- (r.studyGuide?'<div class="bib-reading-guide"><span class="eyebrow">O QUE OBSERVAR NA LEITURA</span><p>'+h(r.studyGuide)+'</p><h4>Questão para confrontar com a fonte</h4><p>'+h(r.criticalQuestion)+'</p><small>'+h(r.citationHint||"")+'</small></div>':'')+
- '<label>Minhas anotações, capítulos e páginas conferidas<textarea rows="4" data-bibnote="'+h(r.id)+'" placeholder="Registre o capítulo consultado, suas observações e as páginas reais da fonte...">'+h(notes)+'</textarea></label></details></article>';
+ const usage=relevantUsage(r);
+ const keywords=[r.title,r.authors,r.topic,r.type,r.area,...usage.subjects,...usage.topics,...usage.works].join(" ").toLowerCase();
+ return '<article class="reference-card filter-card" data-bib-id="'+h(r.id)+'" data-type="'+h(r.type)+'" data-area="'+h(r.area)+'" data-keywords="'+h(keywords)+'"><div class="reference-head"><span class="reference-icon" aria-hidden="true">⌁</span><div>'+pill(r.type)+pill(r.area,"soft")+'</div>'+button(favorite(r)?"★":"☆","starBook",'data-id="'+h(r.id)+'" aria-label="'+(favorite(r)?"Remover dos favoritos":"Favoritar fonte")+'"',"icon-btn")+'</div>'+
+ '<h3>'+h(r.title)+'</h3><p class="reference-authors">'+h(r.authors)+'</p><p class="reference-topic">'+h(r.topic)+'</p><p class="reference-note">'+h(r.note||"Fonte para apoiar sua pesquisa e organização acadêmica.")+'</p>'+
+ (r.id.startsWith("minha-")?'<div class="reference-buttons">'+button("Excluir minha referência","removeBook",'data-id="'+h(r.id)+'"')+'</div>':"")+
+ '<details class="reference-fiche usage-fiche"><summary>⌁ Onde utilizar</summary>'+
+ '<div class="bib-usage"><div class="usage-group usage-subjects"><h4>Disciplinas relacionadas</h4>'+usageList(usage.subjects)+'</div>'+
+ '<div class="usage-group usage-topics"><h4>Assuntos que você pode pesquisar</h4>'+usageList(usage.topics)+'</div>'+
+ '<div class="usage-group usage-works"><h4>Ideias para trabalhos acadêmicos</h4>'+usageList(usage.works)+'</div>'+
+ (r.studyGuide?'<p class="usage-guidance"><strong>Como estudar esta referência:</strong> '+h(r.studyGuide)+'</p>':"")+
+ (r.criticalQuestion?'<p class="usage-guidance"><strong>Pergunta para orientar sua leitura:</strong> '+h(r.criticalQuestion)+'</p>':"")+
+ '</div><label class="usage-personal-notes">Minhas observações sobre esta referência<textarea rows="4" data-bibnote="'+h(r.id)+'" placeholder="Registre conexões com suas disciplinas, ideias de trabalhos e observações sobre a obra...">'+h(notes)+'</textarea></label></details></article>';
 };
 const page=()=>{
  const refs=all(),types=[...new Set(refs.map(x=>x.type))].sort(),areas=[...new Set(refs.map(x=>x.area))].sort((a,b)=>a.localeCompare(b,"pt-BR"));
  return workspace("bibliografia","Referências Bibliográficas",crumb([{label:"Referências Bibliográficas"}])+
- hero("LIVROS, CIÊNCIA E PESQUISA","Sua biblioteca de conhecimento","Consulte livros universitários, materiais abertos, bases científicas e crie fichas de leitura que fazem sentido para sua graduação.","⌁")+
+ hero("LIVROS, CIÊNCIA E PESQUISA","Sua biblioteca de conhecimento","Encontre livros, materiais e obras científicas e descubra em quais disciplinas, assuntos e trabalhos acadêmicos utilizá-los.","⌁")+
  
- '<section class="content-block"><div class="section-title"><div><span class="eyebrow">ENCONTRE, SALVE E ESTUDE</span><h2>Meu acervo de Física</h2></div>'+pill("Bibliografia por área")+'</div>'+
- '<div class="filter-row bibliography-filters"><label>Buscar autor, título ou assunto<input type="search" data-search placeholder="Ex.: Feynman, Quântica, NIST..."></label>'+
+ '<section class="content-block"><div class="section-title"><div><span class="eyebrow">ENCONTRE REFERÊNCIAS E DESCUBRA ONDE UTILIZAR</span><h2>Meu acervo de Física</h2></div>'+pill("Bibliografia por área")+'</div>'+
+ '<div class="filter-row bibliography-filters"><label>Buscar título, autor, assunto ou disciplina<input type="search" data-search placeholder="Ex.: Física Moderna, Eletromagnetismo, seminário..."></label>'+
  '<label>Tipo de material<select data-filter-type><option value="">Todos os tipos</option>'+types.map(x=>'<option>'+h(x)+'</option>').join("")+'</select></label>'+
  '<label>Área científica<select data-filter-area><option value="">Todas as áreas</option>'+areas.map(x=>'<option>'+h(x)+'</option>').join("")+'</select></label>'+
  '<label class="favorite-filter"><input id="favorite-filter" type="checkbox"> Só minhas favoritas</label></div>'+
@@ -32,15 +52,10 @@ const page=()=>{
  '<label>Título da obra ou artigo<input name="title" maxlength="240" placeholder="Ex.: Artigo sobre interferência" required></label>'+
  '<label>Autor ou instituição<input name="authors" maxlength="220" placeholder="Autor da publicação" required></label>'+
  '<label>Assunto<input name="topic" maxlength="220" placeholder="Ex.: Óptica e interferência"></label>'+
- '<label>URL da fonte, se tiver<input name="url" maxlength="600" inputmode="url" placeholder="https://..."></label>'+
+ 
  '<button class="btn btn-primary" type="submit">+ Guardar no meu acervo</button></form></section>');
 };
-function copyText(str){
- if(navigator.clipboard?.writeText){navigator.clipboard.writeText(str).then(()=>toast("Dados copiados! ✦")).catch(()=>toast("Selecione os dados para copiar."))}
- else toast("A cópia automática não está disponível.");
-}
 onAction("starBook",el=>{toggle("bookstars",el.dataset.id);update()});
-onAction("copyBook",el=>{const r=all().find(x=>x.id===el.dataset.id);if(r)copyText(r.authors+". "+r.title+". "+(r.url?"Disponível em: "+r.url:"") )});
 onAction("removeBook",el=>{
  const id=el.dataset.id;if(!id.startsWith("minha-"))return;
  state.mybooks=state.mybooks.filter(x=>x.id!==id);
@@ -51,13 +66,11 @@ onSubmit("form-new-book",form=>{
  const f=new FormData(form);
  const title=String(f.get("title")||"").trim(),authors=String(f.get("authors")||"").trim();
  if(!title||!authors){toast("Preencha título e autoria da sua referência.");return}
- const entered=String(f.get("url")||"").trim();
- const url=external(entered)?entered:"";
  state.mybooks.push({
   id:"minha-"+Date.now()+"-"+Math.floor(Math.random()*10000),
   title,authors,topic:String(f.get("topic")||"").trim()||"Leitura pessoal em Física",
-  type:"Minha referência",area:"Acervo pessoal",url,
-  note:"Uma nova descoberta na sua biblioteca. Adicione anotações e páginas de estudo na ficha de leitura."
+  type:"Minha referência",area:"Acervo pessoal",url:"",
+  note:"Uma descoberta para relacionar com disciplinas, pesquisas e trabalhos acadêmicos."
  });
  A.save();A.render();toast("Referência adicionada ao seu caderno! ✦");
 });
