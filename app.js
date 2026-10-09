@@ -56,7 +56,7 @@ function header(active){
 }
 function route(){
  const path=decodeURIComponent((location.hash||"#home").slice(1)).split("/"),name=path[0]||"home";
- const current=name==="estudo-extra"?"resumos":name==="leitura"?"resumos":name==="revisao"?"flashcards":name==="periodo"?"resumos":name;
+ const current=name==="revisao-extra"?"flashcards":name==="estudo-extra"?"resumos":name==="leitura"?"resumos":name==="revisao"?"flashcards":name==="periodo"?"resumos":name;
  return {path,name,current};
 }
 function render(preserve=false){
