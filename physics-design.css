@@ -328,3 +328,14 @@ body.login-locked{background:#f8f5ff}
 /* Motion */
 @keyframes floatGlyph{0%,100%{transform:translateY(0) rotate(-7deg)}50%{transform:translateY(-13px) rotate(7deg)}}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.auth-note:hover,.term-card:hover,.module-card:hover{filter:saturate(1.1)}}
+
+
+/* As disciplinas pesquisadas na biblioteca mantêm variedade cromática mesmo
+   quando envoltas em cartões de filtro. */
+.subject-grid>.filter-card:nth-child(4n+2)>.subject-card{background:linear-gradient(145deg,#fff,#f2ecff);border-top-color:#a896e3}
+.subject-grid>.filter-card:nth-child(4n+3)>.subject-card{background:linear-gradient(145deg,#fff,#eafbf2);border-top-color:#73d1aa}
+.subject-grid>.filter-card:nth-child(4n)>.subject-card{background:linear-gradient(145deg,#fff,#fff0df);border-top-color:#f0bf76}
+.subject-search{transition:transform .18s,box-shadow .18s}
+.subject-search:hover{transform:translateY(-3px);box-shadow:6px 11px 0 rgba(81,114,192,.085)}
+.reference-search:hover{border-color:#8ec8db;background:#f5fdff}
+@media(prefers-reduced-motion:reduce){.subject-search{transition:none!important}.subject-search:hover{transform:none!important}}
