@@ -12,8 +12,8 @@ const sectionHTML=s=>{
 };
 function bibliography(){
  const b=T.state().bibliography;
- return '<section class="tcc-print-section tcc-print-bibliography"><h2>Apêndice B — Acervo de consulta do projeto</h2><p class="tcc-small-print">Confira edição, dados editoriais e fontes realmente consultadas antes da submissão.</p>'+
- (b.length?b.map(r=>'<p>'+h([r.author,r.title,r.year!=="a conferir"?r.year:"",r.url].filter(Boolean).join(". "))+'.</p>').join(""):'<p>Referências acadêmicas a inserir após consulta e verificação.</p>')+'</section>';
+ return '<section class="tcc-print-section tcc-print-bibliography"><h2>Apêndice B — Acervo de consulta do projeto</h2><p class="tcc-small-print">Referências organizadas com os dados disponíveis. Confira local, editora, ano, autoria e demais exigências da ABNT antes da submissão; nenhuma fonte digital é aberta pelo sistema.</p>'+
+ (b.length?b.map(r=>'<p>'+h([String(r.author||"").toUpperCase(),r.title,r.year&&r.year!=="a conferir"?r.year:"[s. d.]"].filter(Boolean).join(". "))+'.</p>').join(""):'<p>Referências acadêmicas a inserir após consulta e verificação.</p>')+'</section>';
 }
 function simulationTable(){
  try{
