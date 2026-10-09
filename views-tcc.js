@@ -154,7 +154,7 @@ function sourceManager(){
  '<div class="tcc-tool-footer">'+action("+ Adicionar fonte","addSource",'',"primary")+'</div>'+
  '<div class="tcc-bib-grid">'+r.map(ref=>'<article class="tcc-source"><div class="tcc-source-title"><b>'+h(ref.title)+'</b>'+action("×","removeSource",'data-id="'+h(ref.id)+'"',"tcc-small-warn")+'</div>'+
  [["Autor ou instituição","author"],["Título completo","title"],["Ano ou data a confirmar","year"],["Assuntos da Física","topic"],["Situação de leitura","status"],["Notas para uso no TCC","notes"]].map(([label,key])=>field(label,ref[key]||"",'data-tcc-ref="'+h(ref.id)+'" data-tcc-prop="'+key+'"',key==="notes"?"textarea":"input")).join("")+
- '<div class="tcc-source-link">'+field("Endereço da fonte (para documentação)",ref.url,'data-tcc-ref="'+h(ref.id)+'" data-tcc-prop="url"',"input")+'</div></article>').join("")+'</div>');
+ '<div class="tcc-source-link"><b>Referência bibliográfica para revisão</b><p>'+h([String(ref.author||"").toUpperCase(),ref.title,ref.year&&ref.year!=="a conferir"?ref.year:"[s. d.]"].filter(Boolean).join(". "))+'.</p><small>Confira dados editoriais e os requisitos ABNT de sua instituição antes da entrega.</small></div></article>').join("")+'</div>');
 }
 function versions(){
  const m=T.state();
