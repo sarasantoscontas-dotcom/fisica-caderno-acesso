@@ -206,3 +206,25 @@ O arquivo physics-tcc-vibrant.css introduz azul mais intenso e azul-claro, lilá
 ### Testes
 
 Scripts, mini prévia, navegação, rota PDF, cálculos de Física, persistência, backup, limpeza e restauração verificados por simulação JavaScript. Recomenda-se inspecionar layout e impressão em celulares e navegadores reais antes de distribuição aos alunos.
+
+## Expansão: Pesquisa Acadêmica, Controle Semestral e Provas e Revisões (09/10/2026)
+
+Estes três novos ambientes são independentes do TCC, Resumos, Flashcards e Bibliografia. Backup prévio: branch backup-antes-pesquisa-semestre-provas-20261009. Todos seguem a identidade editorial de Física, com tons de azul, lilás, turquesa, verde, texturas de papel e layout responsivo.
+
+### Pesquisa Acadêmica em Física
+Rota #pesquisa. Ambiente de iniciação científica, mestrado e doutorado com projeto preenchido sobre métodos numéricos para oscilador amortecido. Inclui pergunta, hipóteses, objetivos, teoria, estado da arte, integridade científica, metodologia, protocolo, caderno de laboratório, diário de pesquisa, reprodutibilidade, cronograma, orientação, Kanban, versões, artigo, pôster e defesa.
+
+### Controle Semestral
+Rota #semestre. Matriz pessoal de disciplinas editáveis com carga horária, pré-requisitos indicativos, objetivos e situação. Inclui planejamento curricular, atividades, projetos, laboratórios, relatórios, estágios docentes, revisão de conteúdos, organização de prazos e próximo semestre. Conferir matriz e exigências com o PPC da instituição; dados iniciais são apenas ilustrativos.
+
+### Provas e Revisões
+Rota #provas, com avaliações e assuntos editáveis em #provas/tests. O estudante define data, disciplina, domínio e importância de cada assunto e tarefas necessárias. O plano #provas/plano calcula prioridade por dificuldade, relevância e proximidade da prova; cria revisões distribuídas antes das avaliações, com limite diário de sessões configurável. Sua versão de impressão é A4, com disciplinas, prioridades, datas, duração e atividades. O botão Salvar plano de revisão em PDF abre a impressão do navegador: selecionar Salvar como PDF.
+
+### Estrutura técnica
+physics-studios-seed.js contém 90 ferramentas (30 por ambiente), 360 atividades preenchidas, disciplinas e provas demonstrativas de Física. physics-studios-engine.js gerencia edição, prioridades, persistência, importação/exportação de backup JSON, limpeza e restauração. physics-studios-views.js entrega as páginas com galeria, tabelas, documentos, Kanban arrastável, checklist, calendário, timeline, matrizes e fichas. physics-studios.css define estilos exclusivos, responsividade e layout de impressão. Chaves locais independentes: fisica-studio-pesquisa-v1; fisica-studio-semestre-v1; fisica-studio-provas-v1.
+
+### Sem links externos
+Os novos módulos não incluem destinos externos. O botão de consulta externa foi eliminado de Resumos avançados, URLs foram retiradas dos datasets bibliográficos, e o TCC deixa de mostrar o campo de endereço da fonte e omite URLs na exportação. Referências textuais precisam ser conferidas para adequação formal à ABNT antes de entrega, especialmente quando a fonte consultada é eletrônica.
+
+### Verificação
+Scripts carregados em simulação, 90 rotas internas de ferramenta renderizadas sem erro, formulários e edição, persistência isolada, backup e restauração, plano por prioridade, ordenação por data, limite diário, prévia do PDF e acionamento da impressão passaram. Inspeção visual de celulares, tablets e navegadores reais continua recomendada.
