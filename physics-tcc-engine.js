@@ -15,6 +15,13 @@ try{
   model={...model,...previous,metadata:{...model.metadata,...previous.metadata},simulation:{...model.simulation,...previous.simulation},sections:previous.sections,features:{...model.features,...previous.features},bibliography:Array.isArray(previous.bibliography)?previous.bibliography:model.bibliography,snapshots:Array.isArray(previous.snapshots)?previous.snapshots:[],labPlus:{...initialLabPlus(),...(previous.labPlus||{})}};
  }
 }catch(e){/* default preserved if stored data is invalid */}
+const sanitizeSources=()=>{
+ for(const ref of model.bibliography||[]){if(ref&&typeof ref==="object")delete ref.url;}
+ for(const section of model.sections||[]){if(section?.id==="referencias"&&typeof section.body==="string"){
+  section.body=section.body.replace(/Disponível em:\s*https?:\/\/[^\s]+/gi,"").replace(/https?:\/\/[^\s]+/gi,"").replace(/\. \./g,".").replace(/ {2,}/g," ");
+ }}
+};
+sanitizeSources();
 const state=()=>model;
 const save=()=>{model.updated=new Date().toISOString();try{localStorage.setItem(KEY,JSON.stringify(model));return true}catch(e){return false}};
 const reset=()=>{model=fresh();save()};
@@ -53,12 +60,12 @@ const removeEntry=(id,eid)=>{const f=feature(id);if(!f)return false;const old=f.
 const shiftStatus=(id,eid,next)=>{if(!["A fazer","Em andamento","Em revisão","Pronto"].includes(next))return false;return updateEntry(id,eid,"status",next)};
 const updateFeatureNote=(id,value)=>{const f=feature(id);if(!f)return false;f.notes=String(value);save();return true};
 const addRef=()=>{
- const row={id:"user-ref-"+Date.now().toString(36),author:"Autoria a conferir",title:"Nova referência do projeto",year:"a conferir",url:"",topic:"Assunto relacionado à Física",status:"A consultar",notes:"Escreva como esta obra sustenta sua pesquisa."};
+ const row={id:"user-ref-"+Date.now().toString(36),author:"Autoria a conferir",title:"Nova referência do projeto",year:"a conferir",topic:"Assunto relacionado à Física",status:"A consultar",notes:"Escreva como esta obra sustenta sua pesquisa."};
  model.bibliography.push(row);save();return row;
 };
 const updateRef=(id,key,value)=>{
  const row=model.bibliography.find(r=>r.id===id);
- if(!row||!["author","title","year","url","topic","status","notes"].includes(key))return false;
+ if(!row||!["author","title","year","topic","status","notes"].includes(key))return false;
  row[key]=String(value);save();return true;
 };
 const removeRef=id=>{const n=model.bibliography.length;model.bibliography=model.bibliography.filter(r=>r.id!==id);save();return model.bibliography.length!==n};
@@ -77,7 +84,7 @@ const importBackup=str=>{
  if(data?.type!=="caderno-fisica-tcc"||!m||!m.metadata||!Array.isArray(m.sections)||!m.sections.every(x=>typeof x.id==="string"&&typeof x.body==="string"))throw Error("Arquivo não corresponde a backup válido do TCC.");
  if(m.sections.length>100||Object.keys(m.metadata).length>100)throw Error("Estrutura de backup inválida.");
  model={...fresh(),...m,metadata:{...clone(seed.metadata),...m.metadata},sections:m.sections,bibliography:Array.isArray(m.bibliography)?m.bibliography:[],features:{...fresh().features,...m.features},snapshots:Array.isArray(m.snapshots)?m.snapshots.slice(0,12):[]};
- save();return true;
+ sanitizeSources();save();return true;
 };
 const progress=()=>{
  const fields=Object.values(model.metadata).filter(x=>String(x||"").trim()).length;
