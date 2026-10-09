@@ -68,7 +68,7 @@ const reset=id=>replace(id,fresh(get(id).m));
 const clear=id=>{const o=get(id);if(!o)return false;const s=fresh(o.m);Object.values(s.tools).forEach(t=>{t.notes="";t.entries=[]});s.diary=[];s.portfolio=[];s.calculator={};return replace(id,s)};
 const number=(v,name)=>{const x=Number(String(v).replace(",","."));if(!Number.isFinite(x))throw Error("Confira "+name+": informe um número válido.");return x};
 const positive=(v,name)=>{const x=number(v,name);if(x<=0)throw Error(name+" precisa ser maior que zero.");return x};
-const f=(x,d=6)=>Number.isFinite(x)?Number(x.toPrecision(d)).toLocaleString("pt-BR",{maximumFractionDigits:9}):"—";
+const f=(x,d=6)=>!Number.isFinite(x)?"—":x!==0&&Math.abs(x)<1e-6?x.toExponential(d-1).replace("e"," × 10^"):Number(x.toPrecision(d)).toLocaleString("pt-BR",{maximumFractionDigits:9});
 const chart=(fn,end,n=50)=>Array.from({length:n+1},(_,i)=>({x:(i*end)/n,y:fn(i*end/n)}));
 const calcSpecs={
  projectile:{title:"Lançamento oblíquo ideal",fields:[["v","Velocidade inicial (m/s)",20],["angle","Ângulo (graus)",35],["g","Gravidade (m/s²)",9.81]],compute:d=>{
