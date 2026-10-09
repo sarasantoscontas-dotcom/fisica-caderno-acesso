@@ -1,0 +1,47 @@
+/* Física · identidade visual da expansão modular, sem contar recursos na interface. */
+.extended-library,.extended-decks{background:radial-gradient(circle at 10px 10px,rgba(84,121,199,.055) 1.2px,transparent 1.8px) 0 0/25px 25px,linear-gradient(140deg,#eef8ff,#fff 52%,#f6f0ff);border:1.5px solid #c7dcfa;box-shadow:7px 11px 0 rgba(89,123,204,.075)}
+.extended-decks{background:radial-gradient(circle at 10px 10px,rgba(133,97,194,.056) 1.2px,transparent 1.8px) 0 0/25px 25px,linear-gradient(140deg,#f8f0ff,#fff 53%,#e9fff9);border-color:#e0d0f7}
+.extension-intro{font-size:12px;line-height:1.8;color:#65738f;margin:0 0 20px}
+.extra-summary-grid,.extra-deck-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;min-width:0}
+.extra-summary-card{display:flex;flex-direction:column;gap:10px;min-width:0;padding:20px 17px;background:linear-gradient(145deg,#fff,#eef8ff);border:1.5px solid #d4e5fb;border-top:6px solid #73a7eb;border-radius:20px 12px 22px 14px;box-shadow:5px 8px 0 rgba(68,110,192,.08);transition:box-shadow .2s,transform .2s}
+.extra-summary-card:nth-child(5n+2){background:linear-gradient(145deg,#fff,#f0eaff);border-color:#e2d4f8;border-top-color:#ae8aeb}
+.extra-summary-card:nth-child(5n+3){background:linear-gradient(145deg,#fff,#e9faf2);border-color:#caebdd;border-top-color:#69cba8}
+.extra-summary-card:nth-child(5n+4){background:linear-gradient(145deg,#fff,#fff2e4);border-color:#f2dfbf;border-top-color:#efb974}
+.extra-summary-card:nth-child(5n){background:linear-gradient(145deg,#fff,#fff0f7);border-color:#edd3e4;border-top-color:#e896bd}
+.extra-summary-card:hover{transform:translateY(-3px);box-shadow:7px 14px 0 rgba(68,110,192,.095)}
+.extra-summary-top{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.extra-summary-top .pill{max-width:calc(100% - 41px);white-space:normal}
+.extra-summary-card h3{font-size:16px;line-height:1.4;color:#2e477f;font-weight:900;letter-spacing:-.026em;margin:3px 0;overflow-wrap:anywhere}
+.extra-summary-card p{font-size:11px;line-height:1.76;color:#5b6a86;margin:0;flex:1}
+.extra-summary-status{font-size:10px;color:#3e8a8b;font-weight:800}
+.extra-read-link{font-size:11px;color:#4c70ad;font-weight:850;background:#fff;padding:10px 12px;border:1px solid #d9e5f5;border-radius:9px;align-self:flex-start}
+.extra-deck-grid .extra-deck{min-height:230px}
+.extra-deck .deck-top .pill{max-width:calc(100% - 55px);white-space:normal}
+.extra-question{border:1px solid #e5d7f4;border-radius:12px;background:#fff;padding:13px;margin:10px 0}
+.extra-question summary{font-size:12px;line-height:1.6;color:#65499e;font-weight:850;cursor:pointer;overflow-wrap:anywhere}
+.extra-question p{font-size:12px;line-height:1.85;color:#536986}
+.extended-reading .summary-essay>p{line-height:1.95}
+.bib-reading-guide{display:grid;gap:5px;padding:14px;margin:12px 0;background:linear-gradient(120deg,#e9f9ff,#fff);border:1px solid #d1e9f2;border-left:5px solid #78bfcf;border-radius:12px}
+.bib-reading-guide p{font-size:11px;line-height:1.74;color:#506989;margin:5px 0;overflow-wrap:anywhere}
+.bib-reading-guide h4{font-size:12px;color:#4e6f9b;margin:11px 0 0}
+.bib-reading-guide small{font-size:10px;color:#72839c}
+.theme-resumos .sidebar-nav a.active,.theme-flashcards .sidebar-nav a.active,.theme-bibliografia .sidebar-nav a.active{font-weight:900}
+.sidebar-nav{align-content:start}
+.sidebar-nav>a:not(.active){opacity:.92}
+.topbar:has(.main-nav a.active) .main-nav a.active{font-weight:850}
+@media(max-width:1170px){.extra-summary-grid,.extra-deck-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:800px){.extra-summary-grid,.extra-deck-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.extra-summary-card{padding:16px 14px}}
+@media(max-width:600px){
+ .extra-summary-grid,.extra-deck-grid{grid-template-columns:minmax(0,1fr)}
+ .extended-library,.extended-decks{padding:15px 12px}
+ .extra-summary-card{min-width:0;padding:16px 13px}
+ .extra-deck{min-width:0}
+ .extra-summary-card h3{font-size:15px}
+ .extra-summary-card p{font-size:11px}
+ .extra-read-link{width:100%;text-align:center}
+ .bib-reading-guide{padding:11px}
+ .extended-reading .paper-highlight{overflow-wrap:anywhere}
+ .extended-reading .formula-box{overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){.extra-summary-card{transition:none!important}.extra-summary-card:hover{transform:none!important}}
+@media print{.extra-summary-card,.extra-deck{box-shadow:none!important;transform:none!important}.bib-reading-guide{break-inside:avoid}}
