@@ -80,3 +80,18 @@
  .tcc-export-figures .tcc-svg{width:100%!important;min-width:0!important;height:auto!important;max-height:80mm!important}
  .tcc-export-figures .tcc-legend span{font-size:8pt!important}
 }
+
+/* Pré-textuais adicionais: aprovação não é presumida, símbolos reais do modelo */
+.tcc-print-approval{min-height:730px;display:flex;flex-direction:column;gap:15px;padding:32px 0;margin-top:19px}
+.tcc-print-approval h2{text-align:center;text-transform:uppercase;font-size:17px}
+.tcc-print-approval h3{font-size:16px;text-align:center;line-height:1.55}
+.tcc-print-approval .tcc-approval-signature{border-top:1px solid #777;text-align:center;margin:24px auto 7px;padding-top:8px;font-size:12px;width:70%}
+.tcc-print-symbols table{font-size:13px;width:100%;border-collapse:collapse}
+.tcc-print-symbols td,.tcc-print-symbols th{padding:5px 12px;border-bottom:1px solid #eee;text-align:left}
+@media print{
+ .tcc-print-approval{height:230mm!important;min-height:230mm!important;max-height:230mm!important;page-break-after:always!important;break-after:page!important;margin:0!important;padding:9mm 0!important}
+ .tcc-print-approval h2,.tcc-print-approval h3{font-size:12pt!important}
+ .tcc-print-approval p{font-size:12pt!important}
+ .tcc-print-symbols{break-before:page!important;page-break-before:always!important}
+ .tcc-print-symbols table{font-size:11pt!important}
+}
