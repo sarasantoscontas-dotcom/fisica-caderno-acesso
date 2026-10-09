@@ -54,7 +54,7 @@ function loginView(){
 }
 function header(active){
  const isModule=modules.some(m=>m.id===active);
- const visible=isModule?modules.filter(m=>m.id===active):modules;
+ const visible=isModule?modules.filter(m=>m.id===active):modules.filter(m=>!m.expansion);
  const links=visible.map(m=>'<a class="'+(active===m.id?"active":"")+'" href="#'+m.id+'">'+m.icon+' '+h(m.title)+'</a>').join("");
  return '<header class="topbar" id="topbar"><a class="top-logo" href="#home"><span class="brand-mark">φ</span><span><b>Caderno do Estudante</b><small>Física · Meu universo acadêmico</small></span></a><nav id="main-nav" class="main-nav" aria-label="'+(isModule?"Módulo atual":"Módulos do caderno")+'">'+links+'</nav><div class="top-actions">'+(!isModule?'<a href="#busca" class="top-search" aria-label="Buscar">⌕ <span>Buscar</span></a>':"")+button("Sair","logout",'aria-label="Sair do caderno"',"btn-logout")+(!isModule?button("☰","toggleMenu",'aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"',"btn-menu"):"")+'</div></header>';
 }
