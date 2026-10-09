@@ -41,11 +41,12 @@ function documentHTML(){
  '<p>'+h(nameOf(data.city))+'</p><p>'+h(nameOf(data.year))+'</p></section>'+
  '<section class="tcc-print-cover tcc-print-title-page"><div class="tcc-print-cover-name">'+h(nameOf(data.author))+'</div><h1>'+h(nameOf(data.title))+'</h1>'+
  '<div class="tcc-print-work-description"><p>Trabalho de Conclusão de Curso apresentado à '+h(nameOf(data.institution))+' como parte das atividades acadêmicas do curso de '+h(nameOf(data.course))+'.</p><p>Área: '+h(nameOf(data.area))+'.</p><p>Orientação: '+h(nameOf(data.advisor))+'.</p></div><p>'+h(nameOf(data.city))+' · '+h(nameOf(data.year))+'</p></section>'+
+ '<section class="tcc-print-approval"><h2>Folha de aprovação</h2><p>'+h(nameOf(data.author))+'</p><h3>'+h(nameOf(data.title))+'</h3><p>Trabalho de Conclusão de Curso apresentado à '+h(nameOf(data.institution))+' para apreciação pela banca examinadora do curso de '+h(nameOf(data.course))+'.</p><p><strong>Data da aprovação:</strong> a ser preenchida após a banca.</p><p><strong>Orientador(a):</strong> '+h(nameOf(data.advisor))+'</p><div class="tcc-approval-signature">Banca examinadora — identificação e assinatura a preencher</div><div class="tcc-approval-signature">Banca examinadora — identificação e assinatura a preencher</div><div class="tcc-approval-signature">Banca examinadora — identificação e assinatura a preencher</div></section>'+
  abstracts.map(sectionHTML).join("")+
+ '<section class="tcc-print-section tcc-print-symbols"><h2>Lista de símbolos</h2><table><tbody>'+[["m","Massa (kg)"],["k","Constante elástica (N/m)"],["b","Coeficiente de amortecimento viscoso (kg/s)"],["x","Deslocamento (m)"],["v","Velocidade (m/s)"],["ω₀","Frequência natural (rad/s)"],["γ","Taxa de amortecimento (s⁻¹)"],["ωd","Frequência amortecida (rad/s)"],["h","Passo temporal (s)"],["E","Energia mecânica (J)"]].map(([symbol,label])=>'<tr><th>'+symbol+'</th><td>'+label+'</td></tr>').join("")+'</tbody></table></section>'+
  '<section class="tcc-print-section tcc-print-contents"><h2>Sumário</h2><p class="tcc-small-print">Títulos estruturais; confira a numeração de páginas do documento final conforme as normas institucionais.</p>'+
  '<ol>'+refsBefore.filter(s=>!/^\d\.\d/.test(s.title)).map(s=>'<li>'+h(s.title)+'</li>').join("")+'<li>Referências</li><li>Apêndice</li></ol></section>'+
- refsBefore.map(sectionHTML).join("")+
- simulationTable()+
+ refsBefore.map(item=>sectionHTML(item)+(item.id==="resultados"?simulationTable():"")).join("")+
  ending.map(sectionHTML).join("")+
  bibliography()+'</article>';
 }
