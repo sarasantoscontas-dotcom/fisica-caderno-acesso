@@ -25,7 +25,7 @@ const sidebar=(id,active)=>{
 };
 const shell=(id,active,body)=>{
  const m=X.get(id).m;
- return '<div class="px-shell px-theme-'+id+'">'+sidebar(id,active)+'<div class="px-main"><header class="px-header"><div><span>✦ '+h(m.category)+'</span><small>Seu espaço independente de estudo científico</small></div><div class="px-header-actions">'+link("Visão geral",id)+link("Minhas oficinas",id,"#oficinas","px-primary")+'</div></header><main class="px-body">'+body+'</main><footer class="px-footer">∇ Caderno do Estudante de Física · '+h(m.title)+' · Registros locais neste dispositivo</footer></div></div>';
+ return '<div class="px-shell px-theme-'+id+'">'+sidebar(id,active)+'<div class="px-main"><header class="px-header"><div><span>✦ '+h(m.category)+'</span><small>Seu espaço independente de estudo científico</small></div><div class="px-header-actions">'+link("Visão geral",id)+link("Explorar oficinas",id,"","px-primary")+'</div></header><main class="px-body">'+body+'</main><footer class="px-footer">∇ Caderno do Estudante de Física · '+h(m.title)+' · Registros locais neste dispositivo</footer></div></div>';
 };
 const headline=(ey,title,subtitle)=>'<div class="px-headline"><span>'+h(ey)+'</span><h1>'+h(title)+'</h1><p>'+h(subtitle)+'</p></div>';
 const tile=(id,t,i)=>{
@@ -33,7 +33,7 @@ const tile=(id,t,i)=>{
  return '<a href="#'+id+'/tool/'+t.id+'" class="px-tile" data-px-search="'+nice((t.title+" "+t.detail).toLowerCase())+'"><div class="px-tile-cover"><span>∇ '+nice(String(i+1).padStart(2,"0"))+'</span><b>'+h(["∮","∑","λ","φ","ℏ"][i%5])+'</b></div><small>'+h(kindLabels[item.kind])+'</small><h3>'+h(t.title)+'</h3><p>'+h(t.detail)+'</p><strong>'+label+' →</strong></a>';
 };
 const row=(id,fid,e)=>{
- return '<article class="px-entry" data-px-draggable="'+h(e.id)+'" draggable="true"><div class="px-entry-top"><label class="px-check"><input type="checkbox" '+(e.checked?"checked":"")+' '+attr(id,fid,e.id)+' data-px-key="checked"> Concluído</label>'+button("Excluir","removeEntry",attr(id,fid,e.id),"px-danger")+'</div>'+
+ return '<article class="px-entry" data-px-draggable="'+h(e.id)+'"><div class="px-entry-top"><label class="px-check"><input type="checkbox" '+(e.checked?"checked":"")+' '+attr(id,fid,e.id)+' data-px-key="checked"> Concluído</label>'+button("Excluir","removeEntry",attr(id,fid,e.id),"px-danger")+'</div>'+
  input("Atividade específica",id,fid,e.id,"title",e.title)+input("Procedimento, conceito e aplicação",id,fid,e.id,"detail",e.detail,"textarea")+
  '<div class="px-entry-bottom">'+input("Etapa",id,fid,e.id,"status",e.status,"select")+input("Prazo pessoal",id,fid,e.id,"due",e.due,"date")+'</div></article>';
 };
@@ -158,4 +158,20 @@ const actions={
  import:b=>{const raw=A.$("#px-import-backup")?.value;if(!raw){A.toast("Cole o backup antes de importar.");return}if(!confirm("Substituir dados atuais deste módulo pelo backup informado?"))return;try{X.restore(b.dataset.pxId,raw);rerender();A.toast("Backup restaurado.")}catch(e){A.toast(e.message)}}
 };
 document.addEventListener("click",e=>{const b=e.target?.closest?.("[data-px-action]");if(b&&actions[b.dataset.pxAction])actions[b.dataset.pxAction](b)});
+
+let pxHomeCategory="Todos",pxHomeQuery="";
+function pxFilterHome(){
+ const query=pxHomeQuery.toLocaleLowerCase("pt-BR");
+ A.$("[data-px-home-category]").forEach(card=>{
+  const matchesGroup=pxHomeCategory==="Todos"||card.dataset.pxHomeCategory===pxHomeCategory;
+  card.hidden=!matchesGroup||!String(card.dataset.pxHomeKeywords||"").includes(query);
+ });
+ A.$("[data-px-home-cat]").forEach(b=>{
+  const active=b.dataset.pxHomeCat===pxHomeCategory;
+  b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));
+ });
+}
+document.addEventListener("input",e=>{if(e.target?.dataset?.pxHomeSearch!==undefined){pxHomeQuery=e.target.value.trim();pxFilterHome();}});
+document.addEventListener("click",e=>{const b=e.target?.closest?.("[data-px-home-cat]");if(b){pxHomeCategory=b.dataset.pxHomeCat;pxFilterHome();}});
+
 })();
