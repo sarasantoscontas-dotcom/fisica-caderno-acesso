@@ -104,3 +104,31 @@
  body:has(#phy-review-print) .phy-plan-table tr{break-inside:avoid}
  body:has(#phy-review-print) .phy-print-title h1{font-size:22px}
 }
+
+
+/* Seven independent study modules — home gallery and responsive main nav */
+.home-page .module-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.home-page .module-card:nth-child(5){border-top:5px solid #7fb6ed}
+.home-page .module-card:nth-child(5) .module-cover{background:radial-gradient(circle at 13px 13px,rgba(255,255,255,.19) 1.3px,transparent 2px) 0 0/27px 27px,linear-gradient(130deg,#2463ba,#42b7c8,#9b84e0)}
+.home-page .module-card:nth-child(6){border-top:5px solid #67c99c}
+.home-page .module-card:nth-child(6) .module-cover{background:radial-gradient(circle at 13px 13px,rgba(255,255,255,.19) 1.3px,transparent 2px) 0 0/27px 27px,linear-gradient(130deg,#2079aa,#5ac6ad,#e5bf79)}
+.home-page .module-card:nth-child(7){border-top:5px solid #ab88e7}
+.home-page .module-card:nth-child(7) .module-cover{background:radial-gradient(circle at 13px 13px,rgba(255,255,255,.19) 1.3px,transparent 2px) 0 0/27px 27px,linear-gradient(130deg,#595bc1,#8c7ce4,#e99dc4)}
+@media(min-width:801px) and (max-width:1300px){
+ .topbar .main-nav{display:none;position:absolute;z-index:90;top:100%;left:12px;right:12px;background:linear-gradient(125deg,#f3f8ff,#fff,#effcf8);border:1.5px solid #cbdcf4;border-radius:14px;box-shadow:0 13px 30px rgba(47,89,165,.2);padding:12px;flex-direction:column;align-items:stretch}
+ .topbar{position:sticky;z-index:91}
+ .topbar .main-nav a{min-height:41px;display:flex;font-size:12px;padding:11px 15px}
+ .nav-open .topbar .main-nav{display:flex}
+ .topbar .btn-menu{display:inline-flex;min-height:35px;font-size:18px;padding:4px 10px}
+}
+@media(max-width:800px){
+ .home-page .module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .home-page .module-grid .module-card:nth-child(n){grid-column:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:145px auto}
+ .home-page .module-grid .module-card:nth-child(n) .module-cover{height:145px;min-height:145px}
+ .home-page .module-grid .module-card:last-child{grid-column:1/-1}
+}
+@media(max-width:600px){
+ .home-page .module-grid{grid-template-columns:minmax(0,1fr)}
+ .home-page .module-grid .module-card:nth-child(n){grid-column:auto;grid-template-columns:minmax(0,1fr);grid-template-rows:145px auto;transform:none!important}
+ .home-page .module-grid .module-card:nth-child(n) .module-cover{min-height:145px;height:145px}
+}
