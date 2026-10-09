@@ -101,3 +101,16 @@ Próximas etapas possíveis: TCC, pesquisa, Controle de Semestres, estágio/doc�
 **Garantias técnicas verificadas:** simulação de carregamento dos 12 scripts; login inicial; rotas principais e rotas novas; menus e links sem cruzamento entre os três módulos; persistência de leitura, favorito e avaliação dos novos materiais; ausência de métricas numéricas nas páginas avaliadas. A renderização gráfica em um navegador físico e o comportamento de publicação dependem da versão hospedada.
 
 **Arquitetura para expansões futuras:** novas áreas devem ter datasets próprios e `views-<modulo>.js` separados, persistir dados por chaves próprias no estado e não incluir navegação cruzada dentro de outros módulos.
+
+## Referências Bibliográficas: onde utilizar (09/10/2026)
+
+Atualização **restrita à Bibliografia**. A navegação permanece isolada, sem links para módulos irmãos.
+
+- Os cartões bibliográficos mostram título, autores, tema, tipo e área, favoritos e um painel expansível intitulado **Onde utilizar**.
+- **Nenhum botão abre links para sites, editoras, catálogos ou obras**. A ação **Copiar dados** também foi removida. O cadastro de referência pessoal não solicita mais URL. Links antigos armazenados anteriormente não são apagados do estado local, apenas não são exibidos.
+- O arquivo `physics-bibliography-usage.js` mapeia as 35 referências gerais e as 40 fichas de leitura dirigidas a cursos do MIT para suas **disciplinas relacionadas** e **assuntos a estudar**. As 35 fontes gerais têm situações de uso específicas, e as 40 fichas possuem exemplos de seminários, relatórios e atividades de investigação derivados do assunto, roteiro e pergunta da própria ficha.
+- Cada painel **Onde utilizar** apresenta (i) disciplinas relacionadas, (ii) assuntos que podem ser pesquisados, (iii) ideias para trabalhos acadêmicos e, quando disponível, (iv) orientação e pergunta de leitura. A busca da Bibliografia também indexa essas relações, permitindo pesquisar por disciplina ou aplicação.
+- **Anotações e favoritos preservados**: a propriedade existente `booknotes[ref.id]` continua sendo utilizada pelo campo **Minhas observações sobre esta referência**, mantendo todos os registros do estudante. Inclusão e exclusão de obras pessoais continuam funcionando, sem link externo.
+- O arquivo `physics-bibliography-usage.css` dá apresentação com cartões em tons azul-claro, lilás e verde-menta, com adaptação a celulares.
+
+**Validação simulada:** 75 fontes exibidas e 75 painéis `Onde utilizar`; todas com disciplinas e assuntos; nenhuma ligação externa ou botão de cópia na Biblioteca; dados pessoais, notas e favoritos preservados; módulos de Resumos e Flashcards renderizando normalmente. Inspeção visual em navegador real continua recomendada.
