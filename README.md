@@ -160,3 +160,24 @@ Os dados do TCC são guardados na chave `fisica-caderno-tcc-laboratorio-v1`, sep
 ### Verificação
 
 Foi executado um conjunto de testes estruturais e funcionais simulados, incluindo carregamento de scripts, preservação dos três módulos originais, acesso, páginas acadêmicas, todos os grupos, 64 ferramentas, 15 capítulos, edição de metadados, salvamento, movimentação de Kanban, versões, limpeza e restauração, simulação quantitativa, gráficos SVG e composição para impressão. Os arquivos CSS passaram pela conferência estrutural e estão na ordem adequada. **Testes visuais reais em celulares, tablets e navegadores, assim como inspeção de PDF impresso, são recomendados antes da distribuição.**
+
+
+## Novo módulo autônomo — Meu TCC de Física
+
+O módulo **Meu TCC de Física** foi implementado como ambiente de navegação próprio em `#tcc`, independente dos três módulos anteriores. Inclui **64 ferramentas operacionais**, organizadas em oito áreas: estratégia e identidade, escrita, fontes, laboratório de Física, gestão, evidências, normalização, defesa. Apresenta visualizações em dashboard, formulário, quadro, notas, checklist, tabela, galeria, documento, matriz, linha do tempo, simulação, Kanban arrastável, calendário, perguntas e respostas e exportação.
+
+### Monografia-modelo preenchida
+
+Título: **Análise numérica do oscilador harmônico amortecido: comparação entre soluções analíticas e métodos de integração temporal**. O conteúdo demonstrativo está em `physics-tcc-seed.js`, com resumo, abstract, introdução, problema, objetivos, justificativa, fundamentação, métodos de integração, revisão, metodologia, discussão, resultados de simulação, conclusões, referências e apêndice. Os resultados são **numéricos calculados localmente**, não são apresentados como coleta real de participantes ou aprovação de banca. Metadados institucionais são exemplos a substituir antes da entrega.
+
+### Ferramentas, dados e segurança das edições
+
+- `physics-tcc-engine.js`: motor isolado, edição persistente de capítulos e metadados, bancos de fontes e atividades, Kanban, histórico de versões, exportação e importação de backup JSON, limpeza opcional dos exemplos e restauração do modelo original.
+- `physics-tcc-features.js`: organização e conteúdo inicial das 64 ferramentas com cartões, tarefas e observações. Todas possuem estrutura própria, editável, armazenada no TCC.
+- `views-tcc.js`: experiência visual de gestão acadêmica, editor, Kanban, cronograma, fontes, simulador, gráficos e controles responsivos.
+- `views-tcc-export.js`: documento montado com o conteúdo editado, capa, folha de rosto, resumos, lista de símbolos, sumário estrutural, capítulos, tabelas e figuras numéricas. **Gerar TCC em PDF** abre o modo de impressão do navegador: escolha **Salvar como PDF**. Não é uma emissão de PDF por serviço remoto ou arquivo gerado automaticamente sem a caixa de impressão.
+- `physics-tcc.css` e `physics-tcc-print.css`: design autônomo em azul profundo, ciano e lavanda, com layout responsivo e impressão A4.
+
+O TCC usa exclusivamente a chave local `fisica-caderno-tcc-laboratorio-v1`, separada das anotações, flashcards e bibliografia do caderno principal. Dados editados são recuperados na mesma instalação do navegador. Antes de limpar exemplos, use **Salvar versão** e **Backup JSON**.
+
+**Como acessar:** abra o Caderno de Física, entre por e-mail, escolha **Meu TCC de Física**, depois use a navegação própria para editar capítulos, testar o oscilador amortecido, planejar entregas e gerar a versão para PDF. Os textos constituem **um exemplo didático de estudo teórico-computacional**; referências, normas institucionais, resultados e metadados devem ser conferidos pelo estudante antes de apresentar um trabalho acadêmico.
