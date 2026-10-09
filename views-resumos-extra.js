@@ -29,8 +29,8 @@ function readExtra([,id]){
  '<div class="formula-box"><span>RELAÇÕES MATEMÁTICAS E CONDIÇÕES DE APLICAÇÃO</span><strong>'+h(x.formula)+'</strong></div>'+
  '<div class="paper-highlight"><span aria-hidden="true">✧</span><div><h3>Exemplo resolvido e interpretado</h3><p>'+h(x.example)+'</p></div></div>'+
  '<div class="paper-highlight peach"><span aria-hidden="true">△</span><div><h3>Limites do modelo e erros comuns</h3><p>'+h(x.warning)+'</p></div></div>'+
- '<h3>Fundamentação para consultar</h3><p>'+h(x.source.name)+'. Ao aprofundar a leitura, confira as condições e demonstrações na fonte acadêmica original.</p>'+
- '<p><a class="btn btn-soft" href="'+h(x.source.url)+'" target="_blank" rel="noopener noreferrer">Consultar fonte científica ↗</a></p></div>'+
+ '<h3>Fundamentação para consultar</h3><p>'+h(x.source.name)+'. Os conceitos essenciais e suas hipóteses estão explicados no resumo; a referência bibliográfica é identificada pelo título, sem direcionamentos externos.</p>'+
+ '<p class="reading-source-note">Referência de consulta: <strong>'+h(x.source.name)+'</strong>. Os conceitos, fórmulas e exemplos necessários estão explicados nesta página.</p></div>'+
  '<section class="thought-question"><span class="eyebrow">COMPREENSÃO E RACIOCÍNIO</span><h3>Questões comentadas sobre este assunto</h3>'+
  x.questions.map(q=>'<details class="extra-question"><summary>'+h(q.question)+'</summary><p>'+h(q.answer)+'</p></details>').join("")+'</section>'+
  '<section class="student-notes"><div class="student-notes-top"><div><span class="eyebrow">MEU CADERNO DE FÍSICA</span><h3>Minhas deduções e observações ✎</h3></div><span>∮</span></div>'+
