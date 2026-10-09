@@ -117,13 +117,13 @@
  .section-title .handwritten{display:none}
  .home-modules,.home-terms{margin-top:28px}
  .module-grid,.subject-grid,.deck-grid,.reference-grid,.search-ref-grid{grid-template-columns:minmax(0,1fr)}
- ..module-card:nth-child(n){grid-template-columns:minmax(0,1fr);grid-template-rows:140px auto;transform:none!important;border-radius:19px}
+  .module-card:nth-child(n){grid-template-columns:minmax(0,1fr);grid-template-rows:140px auto;transform:none!important;border-radius:19px}
  .module-card .module-cover{min-height:140px;height:140px;padding:17px}
  .module-card .module-symbol{font-size:56px}
  .module-description{padding:16px}
  .module-description h3{font-size:18px}
  .module-description p{font-size:11px}
- ..module-card:last-child{grid-column:auto}
+  .module-card:last-child{grid-column:auto}
  .term-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
  .term-card{min-height:152px;padding:15px 12px}
  .term-card h3{font-size:14px;margin:9px 0 2px}
