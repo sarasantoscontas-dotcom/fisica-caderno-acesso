@@ -42,7 +42,7 @@
  .tcc-print-simulation{overflow-x:auto}
  .tcc-print-simulation table{min-width:450px}
 }
-@page{size:A4;margin:25mm 20mm 20mm 30mm}
+@page{size:A4;margin:30mm 20mm 20mm 30mm}
 @media print{
  html,body{margin:0!important;padding:0!important;background:white!important;color:black!important;height:auto!important}
  #topbar,#toast,.tcc-rail,.tcc-topline,.tcc-foot,.tcc-page-header,.tcc-export-notice,.tcc-export-actions,.tcc-export-meta{display:none!important}
@@ -65,4 +65,18 @@
  .tcc-print-simulation table{font-size:10pt!important;page-break-inside:avoid;max-width:100%!important}
  .tcc-print-simulation th,.tcc-print-simulation td{font-size:9pt!important;padding:5pt!important}
  .tcc-print-contents ol{font-size:12pt;line-height:1.8}
+}
+
+/* Gráficos numéricos com escala para o PDF acadêmico */
+.tcc-export-figures{display:grid;gap:17px;margin:18px 0}
+.tcc-export-figures .tcc-plot{max-width:100%;overflow:hidden}
+.tcc-export-figures .tcc-svg{min-width:0;max-width:100%;height:auto}
+@media print{
+ .tcc-export-figures{display:block!important;margin:12pt 0!important}
+ .tcc-export-figures .tcc-plot{width:100%!important;max-width:100%!important;page-break-inside:avoid!important;break-inside:avoid!important;margin:0 0 20pt!important;padding:8pt!important;border:0!important;background:#fff!important;box-shadow:none!important}
+ .tcc-export-figures .tcc-plot-head b{font-size:10pt!important}
+ .tcc-export-figures .tcc-plot-head span{font-size:9pt!important}
+ .tcc-export-figures .tcc-svg-scroll{overflow:hidden!important}
+ .tcc-export-figures .tcc-svg{width:100%!important;min-width:0!important;height:auto!important;max-height:80mm!important}
+ .tcc-export-figures .tcc-legend span{font-size:8pt!important}
 }
