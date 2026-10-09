@@ -1,6 +1,6 @@
 # Caderno do Estudante de Física
 
-**Produto web interativo para estudantes universitários de Física** — primeira entrega com os três módulos principais funcionando, pronto para ser ampliado.
+**Produto web interativo para estudantes universitários de Física** — aplicação interativa com Resumos, Flashcards, Referências Bibliográficas e um universo próprio de Meu TCC de Física.
 
 ## Identidade visual
 
@@ -114,3 +114,49 @@ Atualização **restrita à Bibliografia**. A navegação permanece isolada, sem
 - O arquivo `physics-bibliography-usage.css` dá apresentação com cartões em tons azul-claro, lilás e verde-menta, com adaptação a celulares.
 
 **Validação simulada:** 75 fontes exibidas e 75 painéis `Onde utilizar`; todas com disciplinas e assuntos; nenhuma ligação externa ou botão de cópia na Biblioteca; dados pessoais, notas e favoritos preservados; módulos de Resumos e Flashcards renderizando normalmente. Inspeção visual em navegador real continua recomendada.
+
+## Meu TCC de Física — Laboratório Acadêmico (09/10/2026)
+
+Módulo independente implantado na homepage, na navegação do aplicativo e na rota `#tcc`. A aparência interna é propositalmente distinta do restante do caderno: azul profundo, ciano, papelaria científica, fórmulas e animações discretas. Não altera conteúdos ou registros de Resumos, Flashcards e Referências Bibliográficas.
+
+### Conteúdo acadêmico preenchido
+
+O exemplo editável é um **TCC teórico-computacional sobre a análise numérica do oscilador harmônico amortecido**. Há 15 seções textuais completas (aproximadamente 3,4 mil palavras), incluindo resumo, abstract, introdução, problema e hipóteses, objetivos, justificativa, fundamentação, métodos numéricos, revisão bibliográfica, metodologia, análise de resultados demonstrativos, discussão, conclusão, referências e apêndice de reprodução. É um modelo para o aluno compreender a estrutura e adaptar a escrita; não se apresentam dados experimentais ou entrevistas fictícios.
+
+O projeto tem dados institucionais preenchidos como exemplo e editáveis (autor, título, universidade, cidade, ano, orientador, área e linha de pesquisa, problema, objetivos, hipótese e palavras-chave). A ferramenta `#tcc/tool/projeto-02` edita todos esses campos, ligados à capa, folha de rosto e exportação.
+
+### Funcionalidades integradas
+
+- **64 espaços de trabalho reais e predefinidos**, organizados em 8 ambientes: estratégia do projeto, escrita, pesquisa e fontes, método e simulações, gestão, dados e decisões, normalização e revisão, banca e finalização.
+- Formatos: página documental, formulário, tabela editável, matriz, galeria, quadro Kanban, cartões por status, checklist, notas extensas, dashboard, timeline, calendário, perguntas e respostas, simulador com gráficos e exportador.
+- Cada ferramenta possui um objetivo próprio e conteúdo de exemplo de Física. É possível editar títulos, descrições e notas, mudar status e datas, marcar itens concluídos, incluir e remover registros. Os Kanbans aceitam arrastar cartões com mouse; seletores de status dão alternativa ao toque no celular.
+- Editor de capítulos sincronizado com o documento final, banco de referências independente com notas e campos de pesquisa, escrita de problema/hipóteses/objetivos vinculados, versões restauráveis, backup e restauração em JSON e autosalvamento local.
+- Controles `Limpar conteúdo de exemplo` e `Restaurar exemplo original` exibem confirmação. **Limpar afeta somente o conteúdo de TCC e não os demais módulos**. Recomenda-se exportar backup JSON se já houver dados próprios.
+
+### Simulação científica efetiva
+
+A simulação integra numericamente `m x'' + b x' + kx = 0` (regime subamortecido), com valores editáveis de `m`, `k`, `b`, `x0`, `v0`, tempo total e passo. Implementa solução analítica independente, Euler explícito, Euler–Cromer e Runge–Kutta clássico de quarta ordem. Calcula trajetórias de posição, velocidade, energia mecânica, discrepância máxima e final de posição, além de refinamento do passo em `h`, `h/2` e `h/4`. Os gráficos SVG são desenhados com valores calculados, não representações estáticas, e as tabelas do trabalho são montadas com resultados da simulação corrente. É obrigatório testar e documentar as entradas antes de entregar os resultados à banca.
+
+### Geração de PDF
+
+A rota `#tcc/export` monta a prévia completa: capa, folha de rosto, folha de aprovação como **modelo a ser preenchido depois da banca**, resumo, abstract, lista de símbolos, sumário estrutural, texto dos capítulos, gráficos numéricos, tabelas, referências e material adicional de consulta. O botão `Gerar PDF / Imprimir TCC` chama a função nativa `window.print()` e o estudante seleciona `Salvar como PDF` no navegador. Não depende de API externa nem de serviço pago.
+
+A estrutura A4 e as margens são uma **base para conferência**, não uma certificação de conformidade integral com a ABNT: o sumário deverá ter páginas corretas após revisão, a folha de aprovação não deve ser declarada como assinada, e instituição/curso poderão exigir elementos e normas particulares. Guia universitário útil sobre ABNT NBR 14724:2024: https://sddarquivos.webhostusp.sti.usp.br/arquivos/Guia_TCC_convencional_FOB-USP.html.
+
+### Arquivos
+
+```
+physics-tcc-seed.js       Projeto e texto acadêmico-modelo
+physics-tcc-features.js   64 ferramentas com conteúdo demonstrativo específico
+physics-tcc-engine.js     Estado separado, edição, backup, versões, simulação e cálculos
+views-tcc.js              Novo universo visual, editores, galerias, Kanban, tabelas, agenda
+views-tcc-export.js       Prévia e montagem de documento para PDF
+physics-tcc.css           Identidade exclusiva e responsiva do TCC
+physics-tcc-print.css     Visualização e impressão acadêmica A4
+```
+
+Os dados do TCC são guardados na chave `fisica-caderno-tcc-laboratorio-v1`, separada da chave dos outros módulos. Não há backend de sincronização entre dispositivos. O acesso por e-mail também continua local, sem verificação de compra. Essas limitações devem ser consideradas pelo responsável pelo produto ao oferecer o serviço aos estudantes.
+
+### Verificação
+
+Foi executado um conjunto de testes estruturais e funcionais simulados, incluindo carregamento de scripts, preservação dos três módulos originais, acesso, páginas acadêmicas, todos os grupos, 64 ferramentas, 15 capítulos, edição de metadados, salvamento, movimentação de Kanban, versões, limpeza e restauração, simulação quantitativa, gráficos SVG e composição para impressão. Os arquivos CSS passaram pela conferência estrutural e estão na ordem adequada. **Testes visuais reais em celulares, tablets e navegadores, assim como inspeção de PDF impresso, são recomendados antes da distribuição.**
