@@ -232,3 +232,98 @@
  .student-notes,.thought-question{break-inside:avoid}
  .summary-essay{color:#000}
 }
+
+
+/* 10/10/2026 · Barra global simplificada: sem lista de módulos no topo.
+   Todos os módulos continuam acessíveis pela página inicial. */
+.topbar.topbar-simple{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:nowrap;
+ width:100%;
+ height:71px;
+ min-height:71px;
+ gap:12px;
+ padding:10px clamp(12px,3vw,30px);
+}
+.topbar-simple .top-logo{
+ display:flex;
+ flex:1 1 auto;
+ align-items:center;
+ min-width:0;
+ max-width:100%;
+ overflow:hidden;
+}
+.topbar-simple .top-logo .brand-mark{flex:0 0 45px}
+.topbar-simple .top-brand-copy{
+ display:block;
+ min-width:0;
+ max-width:100%;
+ overflow:hidden;
+}
+.topbar-simple .top-brand-copy b,
+.topbar-simple .top-brand-copy small{
+ overflow:hidden;
+ white-space:nowrap;
+ text-overflow:ellipsis;
+}
+.topbar-simple .top-actions{
+ display:flex;
+ align-items:center;
+ justify-content:flex-end;
+ flex:0 0 auto;
+ min-width:0;
+ gap:9px;
+}
+.topbar-simple .top-home-link{
+ display:inline-flex;
+ justify-content:center;
+ align-items:center;
+ gap:7px;
+ min-height:36px;
+ padding:8px 13px;
+ border-radius:12px;
+ border:1px solid #cbdaf5;
+ background:#fff;
+ color:#3d609c;
+ font-size:11px;
+ font-weight:850;
+ white-space:nowrap;
+}
+.topbar-simple .top-home-link:hover{
+ color:#2d59ac;
+ background:#edf5ff;
+}
+.topbar-simple .top-home-link:focus-visible{
+ outline:3px solid #6453db;
+ outline-offset:2px;
+}
+.topbar-simple .top-home-icon{font-size:18px;line-height:1}
+.topbar-simple .btn-logout{flex:0 0 auto;white-space:nowrap}
+@media(max-width:650px){
+ .topbar.topbar-simple{
+  height:62px;
+  min-height:62px;
+  padding:8px 11px;
+  gap:8px;
+ }
+ .topbar-simple .top-logo{gap:8px}
+ .topbar-simple .top-logo .brand-mark{
+  flex-basis:39px;
+  width:39px;
+  height:39px;
+  font-size:27px;
+ }
+ .topbar-simple .top-actions{gap:6px}
+ .topbar-simple .top-home-link{min-width:36px;min-height:35px;padding:7px 8px}
+ .topbar-simple .top-home-label{display:none}
+ .topbar-simple .btn-logout{min-height:35px;padding:7px 9px}
+}
+@media(max-width:375px){
+ .topbar-simple .top-brand-copy b{font-size:10px}
+ .topbar-simple .top-brand-copy small{font-size:8px}
+ .topbar-simple .top-logo{gap:6px}
+ .topbar-simple .top-actions{gap:4px}
+ .topbar-simple .top-home-link{padding:6px 7px;min-width:34px}
+}
