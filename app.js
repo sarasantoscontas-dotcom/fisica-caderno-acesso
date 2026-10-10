@@ -53,11 +53,14 @@ function loginView(){
  '<section class="auth-box"><div class="auth-washi" aria-hidden="true"></div><div class="auth-icons" aria-hidden="true"><span>⚛</span><span>✦</span><span>∇</span></div><span class="eyebrow">'+(back?"QUE BOM TER VOCÊ DE VOLTA":"SEJA MUITO BEM-VINDO(A)")+'</span><h2>'+(back?"Seu caderno está esperando por você!":"Que alegria ter você aqui!")+'</h2><p>Para entrar, digite o mesmo e-mail que você informou na compra do <b>Caderno do Estudante de Física</b>.</p><form id="login-form" novalidate><label for="login-email">E-mail utilizado na compra</label><div class="login-field"><span aria-hidden="true">✉</span><input type="text" id="login-email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="Digite seu e-mail de compra" required aria-describedby="login-error"></div><p id="login-error" role="alert" hidden></p><button type="submit" class="btn btn-primary">Entrar no meu caderno <span>→</span></button></form><div class="auth-good">✧ Boas descobertas começam por aqui.</div></section></div></div>';
 }
 function header(active){
- const isModule=modules.some(m=>m.id===active);
- const visible=isModule?modules.filter(m=>m.id===active):modules.filter(m=>!m.expansion);
- const links=visible.map(m=>'<a class="'+(active===m.id?"active":"")+'" href="#'+m.id+'">'+m.icon+' '+h(m.title)+'</a>').join("");
- return '<header class="topbar" id="topbar"><a class="top-logo" href="#home"><span class="brand-mark">φ</span><span><b>Caderno do Estudante</b><small>Física · Meu universo acadêmico</small></span></a><nav id="main-nav" class="main-nav" aria-label="'+(isModule?"Módulo atual":"Módulos do caderno")+'">'+links+'</nav><div class="top-actions">'+(!isModule?'<a href="#busca" class="top-search" aria-label="Buscar">⌕ <span>Buscar</span></a>':"")+button("Sair","logout",'aria-label="Sair do caderno"',"btn-logout")+(!isModule?button("☰","toggleMenu",'aria-expanded="false" aria-controls="main-nav" aria-label="Abrir menu"',"btn-menu"):"")+'</div></header>';
+ const isHome=active==="home";
+ return '<header class="topbar topbar-simple" id="topbar">'+
+ '<a class="top-logo" href="#home" aria-label="Voltar à página inicial do Caderno de Física"><span class="brand-mark">φ</span><span class="top-brand-copy"><b>Caderno do Estudante</b><small>Física · Meu universo acadêmico</small></span></a>'+
+ '<div class="top-actions">'+
+ (!isHome?'<a class="top-home-link" href="#home" aria-label="Voltar ao início"><span class="top-home-icon" aria-hidden="true">⌂</span><span class="top-home-label">Início</span></a>':"")+
+ button("Sair","logout",'aria-label="Sair do caderno"',"btn-logout")+'</div></header>';
 }
+
 function route(){
  const path=decodeURIComponent((location.hash||"#home").slice(1)).split("/"),name=path[0]||"home";
  const current=name==="revisao-extra"?"flashcards":name==="estudo-extra"?"resumos":name==="leitura"?"resumos":name==="revisao"?"flashcards":name==="periodo"?"resumos":name;
